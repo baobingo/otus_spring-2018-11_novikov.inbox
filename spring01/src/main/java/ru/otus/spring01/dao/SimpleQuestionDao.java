@@ -1,6 +1,7 @@
 package ru.otus.spring01.dao;
 
 import ru.otus.spring01.data.CSVLoader;
+import ru.otus.spring01.data.SimpleCSVLoader;
 import ru.otus.spring01.entity.Question;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class SimpleQuestionDao implements QuestionDao {
     private ListIterator<Question> listIterator;
 
     public SimpleQuestionDao(CSVLoader loader) {
-        questions = loader.load();
+        questions = loader.load(SimpleCSVLoader.class.getResource("/questions.csv").getPath());
         listIterator = questions.listIterator();
     }
 

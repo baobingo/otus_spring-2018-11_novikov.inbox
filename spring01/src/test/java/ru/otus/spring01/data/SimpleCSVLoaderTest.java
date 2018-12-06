@@ -12,7 +12,7 @@ class SimpleCSVLoaderTest {
     @Test
     void load() {
         CSVLoader csvLoader = new SimpleCSVLoader();
-        List<Question> questions = csvLoader.load();
+        List<Question> questions = csvLoader.load(SimpleCSVLoaderTest.class.getResource("/questions.csv").getPath());
         assertEquals(questions.size(), 5);
         assertEquals(questions.get(0).getQuestion(), "What year Pushkin was born?");
     }

@@ -37,4 +37,9 @@ public class SimpleQuizService implements QuizService {
     public void startQuiz(String name, String surname) {
         quizDao.getByNameSurname(name, surname);
     }
+
+    @Override
+    public int questionCount() {
+        return questionDao.getCount();
+    }
 }
