@@ -23,8 +23,8 @@ class SimpleMessageResourcesTest {
 
     @Test
     void getI18nString() {
-        assertEquals("Год рождения Александра Сергеевича Пушкина?", ms.getI18nString("q1"));
-        assertEquals("Лучшая кодинг школа?", ms.getI18nString("q5"));
+        assertEquals("А фамилия?", ms.getI18nString("surname"));
+        assertEquals("выиграл", ms.getI18nString("win"));
     }
 
     @Configuration
