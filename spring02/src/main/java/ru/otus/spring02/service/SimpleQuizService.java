@@ -19,12 +19,12 @@ public class SimpleQuizService implements QuizService {
 
     @Override
     public String getQuestion() {
-        return ms.getI18nString(questionDao.next().getQuestion());
+        return questionDao.next().getQuestion();
     }
 
     @Override
     public void checkAnswer(String answer) {
-        if(ms.getI18nString(questionDao.current().getAnswer()).equals(answer)){
+        if(questionDao.current().getAnswer().equals(answer)){
             quizDao.increaseScore();
         }
     }

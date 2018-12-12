@@ -19,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class SimpleCSVLoaderTest {
 
     @Test
-    void load(@Value("${file.path}") String name) {
+    void load(@Value("${file.name}") String name, @Value("${locale.set}") String localSet) {
         CSVLoader csvLoader = new SimpleCSVLoader();
-        List<Question> questions = csvLoader.load(SimpleCSVLoaderTest.class.getResource(name).getPath());
+        List<Question> questions = csvLoader.load(SimpleCSVLoader.class.getResource("/" + name + "_" + localSet + ".csv").getPath());
         assertEquals(questions.size(), 5);
-        assertEquals(questions.get(1).getQuestion(), "q2");
+        assertEquals(questions.get(1).getQuestion(), "Кто президент Российской Федерации?");
     }
 
     @Configuration

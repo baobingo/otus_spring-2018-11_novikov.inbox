@@ -2,23 +2,24 @@ package ru.otus.spring02.data;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import ru.otus.spring02.entity.Question;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class SimpleCSVLoader implements CSVLoader {
 
     @Override
     public List<Question> load(String path) {
         List<Question> questions = new ArrayList<>();
         try {
-            Reader in = new FileReader(path);
+            Reader in = new InputStreamReader(new FileInputStream(URLDecoder.decode(path, "UTF-8")), "UTF-8");
             Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(in);
             for (CSVRecord record : records) {
                 if(record.size() == 2) {
@@ -26,6 +27,7 @@ public class SimpleCSVLoader implements CSVLoader {
                 }
             }
         }catch (IOException e){
+            System.out.println("Question file not found, fix it dude.");
             System.exit(-1);
         }
         return questions;

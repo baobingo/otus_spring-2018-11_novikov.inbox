@@ -13,23 +13,20 @@ import java.util.Locale;
 public class SimpleMessageResources implements MessageResource {
 
     private MessageSource ms;
-    @Value("${locale.set}")
-    private String languageTag;
+    private Locale languageTag;
 
 
-    public SimpleMessageResources(@Value("${bundle.base}") String name) {
+    public SimpleMessageResources(@Value("${bundle.base}") String name, @Value("${locale.set}") String languageTag) {
         ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
         reloadableResourceBundleMessageSource.setBasename("classpath:" + name);
         reloadableResourceBundleMessageSource.setDefaultEncoding("UTF-8");
         this.ms = reloadableResourceBundleMessageSource;
+        this.languageTag = Locale.forLanguageTag(languageTag);
+
     }
 
     @Override
     public String getI18nString(String value) {
-        return ms.getMessage(value, null, Locale.forLanguageTag(languageTag));
-    }
-
-    public void setLanguageTag(String languageTag) {
-        this.languageTag = languageTag;
+        return ms.getMessage(value, null, this.languageTag);
     }
 }

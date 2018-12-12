@@ -18,8 +18,7 @@ class SimpleMessageResourcesTest {
     MessageResource ms;
 
     public SimpleMessageResourcesTest(@Value("${bundle.base}") String name, @Value("${locale.set}") String locale) {
-        this.ms =  new SimpleMessageResources(name);
-        this.ms.setLanguageTag(locale);
+        this.ms =  new SimpleMessageResources(name, locale);
     }
 
     @Test

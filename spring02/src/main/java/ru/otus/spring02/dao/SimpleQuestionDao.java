@@ -1,9 +1,7 @@
 package ru.otus.spring02.dao;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring02.data.CSVLoader;
 import ru.otus.spring02.data.SimpleCSVLoader;
@@ -21,8 +19,8 @@ public class SimpleQuestionDao implements QuestionDao {
     private Question current;
     private ListIterator<Question> listIterator;
 
-    public SimpleQuestionDao(CSVLoader loader, @Value("${file.path}") String name) {
-        questions = loader.load(SimpleCSVLoader.class.getResource(name).getPath());
+    public SimpleQuestionDao(CSVLoader loader, @Value("${file.name}") String name, @Value("${locale.set}") String localSet) {
+        questions = loader.load(SimpleCSVLoader.class.getResource("/" + name + "_" + localSet + ".csv").getPath());
         listIterator = questions.listIterator();
     }
 

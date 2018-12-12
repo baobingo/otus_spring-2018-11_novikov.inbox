@@ -18,21 +18,21 @@ class SimpleQuestionDaoTest {
 
     QuestionDao questionDao;
 
-    public SimpleQuestionDaoTest(@Value("${file.path}") String name) {
-        this.questionDao = new SimpleQuestionDao(new SimpleCSVLoader(), name);
+    public SimpleQuestionDaoTest(@Value("${file.name}") String name, @Value("${locale.set}") String localSet) {
+        this.questionDao = new SimpleQuestionDao(new SimpleCSVLoader(), name, localSet);
     }
 
     @Test
     void next() {
         questionDao.next();
-        assertEquals(questionDao.current().getQuestion(), "q1");
+        assertEquals(questionDao.current().getQuestion(), "Год рождения Александра Сергеевича Пушкина?");
     }
 
     @Test
     void current() {
         questionDao.next();
         questionDao.next();
-        assertEquals(questionDao.current().getQuestion(), "q2");
+        assertEquals(questionDao.current().getQuestion(), "Кто президент Российской Федерации?");
     }
 
     @Test
