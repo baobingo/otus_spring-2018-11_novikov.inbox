@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import ru.otus.spring02.configs.YamlProps;
 import ru.otus.spring02.data.SimpleCSVLoader;
+import ru.otus.spring02.service.SimpleMessageResources;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,8 +16,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @EnableConfigurationProperties(YamlProps.class)
+@ContextConfiguration(classes = {SimpleQuestionDao.class, SimpleCSVLoader.class, SimpleQuizDao.class, SimpleMessageResources.class})
+@TestPropertySource(locations= "classpath:application.yml")
 class SimpleQuestionDaoTest {
 
+    @Autowired
     QuestionDao questionDao;
 
     @Autowired
@@ -25,7 +28,6 @@ class SimpleQuestionDaoTest {
 
     @Test
     void next() {
-        this.questionDao = new SimpleQuestionDao(new SimpleCSVLoader(), props);
         questionDao.next();
         assertEquals(questionDao.current().getQuestion(), "Год рождения Александра Сергеевича Пушкина?");
     }
@@ -44,13 +46,4 @@ class SimpleQuestionDaoTest {
         assertEquals(questionDao.getCount(), 5);
     }
 
-    @Configuration
-    static class Config {
-
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertiesResolver() {
-            return new PropertySourcesPlaceholderConfigurer();
-        }
-
-    }
 }

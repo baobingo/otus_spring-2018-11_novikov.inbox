@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -60,15 +57,5 @@ class SimpleQuizServiceTest {
         service.getQuestion();
         service.checkAnswer("Geekbrain");
         assertEquals(service.loseWin(), false);
-    }
-
-    @Configuration
-    static class Config {
-
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertiesResolver() {
-            return new PropertySourcesPlaceholderConfigurer();
-        }
-
     }
 }
