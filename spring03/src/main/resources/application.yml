@@ -1,0 +1,4 @@
+quiz:
+  filename: questions
+  bundlebase: /i18n/bundle
+  localeset: ru-RU
