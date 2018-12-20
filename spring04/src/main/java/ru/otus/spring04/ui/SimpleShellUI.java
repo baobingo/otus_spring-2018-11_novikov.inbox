@@ -7,13 +7,10 @@ import org.springframework.shell.standard.ShellOption;
 import org.springframework.shell.standard.commands.Help;
 import ru.otus.spring04.service.MessageResource;
 import ru.otus.spring04.service.QuizService;
-import ru.otus.spring04.service.ShellCommand;
 
 
 @ShellComponent
 public class SimpleShellUI implements Help.Command {
-    @Autowired
-    private ShellCommand shellCommand;
     @Autowired
     private MessageResource ms;
     @Autowired
@@ -22,21 +19,29 @@ public class SimpleShellUI implements Help.Command {
     @ShellMethod("Start Quiz")
     public String start(@ShellOption String name, @ShellOption String surname) {
         service.startQuiz(name, surname);
-        return shellCommand.justPrintOut(service.getQuestion());
+        return service.getQuestion();
     }
 
     @ShellMethod("Help info")
     public String help(){
-        return shellCommand.justPrintOut(ms.getI18nString("help_info"));
+        return ms.getI18nString("help_info");
     }
 
     @ShellMethod("Answer")
     public String answer(@ShellOption String answer){
         service.checkAnswer(answer);
         if(service.previousIndex() == service.questionCount()-1){
-            return shellCommand.justPrintOut(ms.getI18nString("you")+ " " + (service.loseWin()?ms.getI18nString("win"):ms.getI18nString("lose")) + ".");
+            return ms.getI18nString("show_result");
         }else{
-            return shellCommand.justPrintOut(service.getQuestion());
+            return service.getQuestion();
         }
+    }
+
+    @ShellMethod("Show result")
+    public String show_result(){
+        if(service.previousIndex() < service.questionCount()-1){
+            return ms.getI18nString("notice");
+        }
+        return ms.getI18nString("you")+ " " + (service.loseWin()?ms.getI18nString("win"):ms.getI18nString("lose")) + ".";
     }
 }

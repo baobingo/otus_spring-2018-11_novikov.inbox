@@ -7,4 +7,5 @@ public interface QuizService {
     void startQuiz(String name, String surname);
     int questionCount();
     int previousIndex();
+    int getScore();
 }

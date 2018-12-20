@@ -51,4 +51,9 @@ public class SimpleQuizService implements QuizService {
     public int previousIndex() {
         return questionDao.previousIndex();
     }
+
+    @Override
+    public int getScore() {
+        return getScore();
+    }
 }
