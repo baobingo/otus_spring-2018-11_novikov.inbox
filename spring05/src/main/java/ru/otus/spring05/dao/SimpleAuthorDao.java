@@ -2,7 +2,11 @@ package ru.otus.spring05.dao;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring05.domain.Author;
 
@@ -27,10 +31,11 @@ public class SimpleAuthorDao implements AuthorDao {
 
     @Override
     public void insert(Author author) {
-        final HashMap<String, Object> attr = new HashMap<>();
-        attr.put("id", author.getId());
-        attr.put("name", author.getName());
-        statement.update("INSERT INTO author VALUES(:id, :name)", attr);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        SqlParameterSource namedParameters = new MapSqlParameterSource();
+        ((MapSqlParameterSource)namedParameters).addValue("name", author.getName());
+        statement.update("INSERT INTO author(name) VALUES(:name)", namedParameters, keyHolder);
+        author.setId((long)keyHolder.getKey());
 
     }
 
@@ -50,13 +55,20 @@ public class SimpleAuthorDao implements AuthorDao {
     public Author getByID(int id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
-        return statement.queryForObject("SELECT * FROM author WHERE id=:id", attr, new AuthorMapper());
+        return statement.queryForObject("SELECT * FROM author WHERE id=:id LIMIT 1", attr, new AuthorMapper());
     }
 
     public class AuthorMapper implements RowMapper<Author> {
         @Override
         public Author mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Author(resultSet.getInt("id"), resultSet.getString("name"));
+            return new Author(resultSet.getLong("id"), resultSet.getString("name"));
         }
+    }
+
+    @Override
+    public Author getByName(String name) {
+        final HashMap<String, Object> attr = new HashMap<>();
+        attr.put("name", name);
+        return statement.queryForObject("SELECT * FROM author WHERE name LIKE :name LIMIT 1", attr, new AuthorMapper());
     }
 }

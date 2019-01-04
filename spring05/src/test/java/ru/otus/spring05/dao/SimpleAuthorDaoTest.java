@@ -4,16 +4,16 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.domain.Author;
 
 import java.util.List;
 
-@SpringBootTest
 @ExtendWith({SpringExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@JdbcTest
+@Import({SimpleAuthorDao.class})
 class SimpleAuthorDaoTest {
 
     @Autowired
@@ -26,8 +26,10 @@ class SimpleAuthorDaoTest {
 
     @Test
     void insert() {
-        authorDao.insert(new Author(3, "Author #3"));
+        Author author = new Author("Author #3");
+        authorDao.insert(author);
         Assert.assertEquals(3, authorDao.count());
+        Assert.assertEquals(3, author.getId());
     }
 
     @Test
@@ -45,5 +47,11 @@ class SimpleAuthorDaoTest {
     @Test
     void getByID() {
         Assert.assertEquals("Author #2", authorDao.getByID(2).getName());
+    }
+
+    @Test
+    void getByName() {
+        Author author = authorDao.getByName("Author #1");
+        Assert.assertEquals("Author #1", author.getName());
     }
 }

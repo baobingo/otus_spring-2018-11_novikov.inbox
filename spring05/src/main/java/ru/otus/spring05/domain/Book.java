@@ -1,19 +1,25 @@
 package ru.otus.spring05.domain;
 
 public class Book {
-    private int id;
+    private long id = -1;
     private String name;
     private Author author;
     private Genre genre;
 
-    public Book(int id, String name, Author author, Genre genre) {
+    public Book(String name, Author author, Genre genre) {
+        this.name = name;
+        this.author = author;
+        this.genre = genre;
+    }
+
+    public Book(long id, String name, Author author, Genre genre) {
         this.id = id;
         this.name = name;
         this.author = author;
         this.genre = genre;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -27,5 +33,9 @@ public class Book {
 
     public Genre getGenre() {
         return genre;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

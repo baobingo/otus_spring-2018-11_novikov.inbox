@@ -4,16 +4,16 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.domain.Genre;
 
 import java.util.List;
 
-@SpringBootTest
 @ExtendWith({SpringExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@JdbcTest
+@Import({SimpleGenreDao.class})
 class SimpleGenreDaoTest {
 
     @Autowired
@@ -26,8 +26,10 @@ class SimpleGenreDaoTest {
 
     @Test
     void insert() {
-        genreDao.insert(new Genre(3, "Author #3"));
+        Genre genre = new Genre("Genre #3");
+        genreDao.insert(genre);
         Assert.assertEquals(3, genreDao.count());
+        Assert.assertEquals(3, genre.getId());
     }
 
     @Test
@@ -45,5 +47,11 @@ class SimpleGenreDaoTest {
     @Test
     void getByID() {
         Assert.assertEquals("Genre #2", genreDao.getByID(2).getName());
+    }
+
+    @Test
+    void getByName() {
+        Genre genre = genreDao.getByName("Genre #1");
+        Assert.assertEquals("Genre #1", genre.getName());
     }
 }

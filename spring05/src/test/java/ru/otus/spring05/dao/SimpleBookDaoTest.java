@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.domain.Author;
 import ru.otus.spring05.domain.Book;
@@ -13,9 +13,9 @@ import ru.otus.spring05.domain.Genre;
 
 import java.util.List;
 
-@SpringBootTest
 @ExtendWith({SpringExtension.class})
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@JdbcTest
+@Import({SimpleBookDao.class, SimpleGenreDao.class, SimpleAuthorDao.class})
 class SimpleBookDaoTest {
 
     @Autowired
@@ -35,7 +35,7 @@ class SimpleBookDaoTest {
         Author author = authorDao.getByID(1);
         Genre genre = genreDao.getByID(2);
 
-        Book book = new Book(3,"Book #3", author, genre);
+        Book book = new Book("Book #3", author, genre);
         bookDao.insert(book);
         Assert.assertEquals(3, bookDao.count());
     }
@@ -44,6 +44,8 @@ class SimpleBookDaoTest {
     void deleteById() {
         bookDao.deleteById(2);
         Assert.assertEquals(1, bookDao.count());
+        authorDao.deleteById(1);
+        Assert.assertEquals(0, bookDao.count());
     }
 
     @Test
@@ -67,17 +69,17 @@ class SimpleBookDaoTest {
         Assert.assertEquals(1, books.size());
 
         Genre genre = genreDao.getByID(2);
-        bookDao.insert(new Book(3,"Book #3", author, genre));
+        bookDao.insert(new Book("Book #3", author, genre));
         books = bookDao.getByAuthor(author);
         Assert.assertEquals(2, books.size());
     }
 
     @Test
     void getByGenre() {
-        Genre genre = new Genre(3, "Genre #3");
+        Genre genre = new Genre("Genre #3");
         genreDao.insert(genre);
 
-        bookDao.insert(new Book(3, "Book #3", authorDao.getByID(1), genre));
+        bookDao.insert(new Book("Book #3", authorDao.getByID(1), genre));
         Assert.assertEquals(3, bookDao.count());
 
         List<Book> books = bookDao.getByGenre(genre);

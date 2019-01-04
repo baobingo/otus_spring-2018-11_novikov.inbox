@@ -10,4 +10,5 @@ public interface AuthorDao {
     void deleteById(int id);
     List<Author> getAll();
     Author getByID(int id);
+    Author getByName(String name);
 }
