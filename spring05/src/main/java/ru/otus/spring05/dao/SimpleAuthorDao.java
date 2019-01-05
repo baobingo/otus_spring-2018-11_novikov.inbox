@@ -1,5 +1,6 @@
 package ru.otus.spring05.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -40,7 +41,7 @@ public class SimpleAuthorDao implements AuthorDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         statement.update("DELETE FROM author WHERE id=:id", attr);
@@ -52,7 +53,7 @@ public class SimpleAuthorDao implements AuthorDao {
     }
 
     @Override
-    public Author getByID(int id) {
+    public Author getByID(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         return statement.queryForObject("SELECT * FROM author WHERE id=:id LIMIT 1", attr, new AuthorMapper());
@@ -69,6 +70,10 @@ public class SimpleAuthorDao implements AuthorDao {
     public Author getByName(String name) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("name", name);
-        return statement.queryForObject("SELECT * FROM author WHERE name LIKE :name LIMIT 1", attr, new AuthorMapper());
+        try {
+            return statement.queryForObject("SELECT * FROM author WHERE name LIKE :name LIMIT 1", attr, new AuthorMapper());
+        }catch (DataAccessException e){
+            return null;
+        }
     }
 }

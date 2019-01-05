@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @EnableConfigurationProperties(YamlProps.class)
 @ContextConfiguration(classes = {SimpleMessageResources.class})
-@TestPropertySource(locations= "classpath:application.yml")
 
 class SimpleMessageResourcesTest {
 

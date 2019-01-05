@@ -21,13 +21,9 @@ import java.util.List;
 public class SimpleBookDao implements BookDao{
 
     private NamedParameterJdbcOperations statement;
-    private AuthorDao authorDao;
-    private GenreDao genreDao;
 
-    public SimpleBookDao(NamedParameterJdbcOperations statement, AuthorDao authorDao, GenreDao genreDao) {
+    public SimpleBookDao(NamedParameterJdbcOperations statement) {
         this.statement = statement;
-        this.authorDao = authorDao;
-        this.genreDao = genreDao;
     }
 
     @Override
@@ -48,7 +44,7 @@ public class SimpleBookDao implements BookDao{
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         statement.update("DELETE FROM book WHERE id=:id", attr);
@@ -60,7 +56,7 @@ public class SimpleBookDao implements BookDao{
     }
 
     @Override
-    public Book getByID(int id) {
+    public Book getByID(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         return statement.queryForObject("SELECT b.id, b.name, a.id aid, a.name aname, g.id gid, g.name gname FROM book b INNER JOIN author a ON a.id = b.authorid INNER JOIN genre g ON g.id = b.genreid WHERE b.id=:id LIMIT 1", attr, new BookMapper());

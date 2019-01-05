@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.domain.Author;
 import ru.otus.spring05.domain.Book;
@@ -16,6 +17,7 @@ import java.util.List;
 @ExtendWith({SpringExtension.class})
 @JdbcTest
 @Import({SimpleBookDao.class, SimpleGenreDao.class, SimpleAuthorDao.class})
+@Sql({"/schema-test.sql", "/data-test.sql"})
 class SimpleBookDaoTest {
 
     @Autowired

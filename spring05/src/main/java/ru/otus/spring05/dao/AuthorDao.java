@@ -7,8 +7,8 @@ import java.util.List;
 public interface AuthorDao {
     int count();
     void insert(Author author);
-    void deleteById(int id);
+    void deleteById(long id);
     List<Author> getAll();
-    Author getByID(int id);
+    Author getByID(long id);
     Author getByName(String name);
 }

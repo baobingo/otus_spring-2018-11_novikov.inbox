@@ -9,9 +9,9 @@ import java.util.List;
 public interface BookDao {
     int count();
     void insert(Book book);
-    void deleteById(int id);
+    void deleteById(long id);
     List<Book> getAll();
-    Book getByID(int id);
+    Book getByID(long id);
     List<Book> getByAuthor(Author author);
     List<Book> getByGenre(Genre genre);
 }

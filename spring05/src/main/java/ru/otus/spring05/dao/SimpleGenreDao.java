@@ -1,5 +1,6 @@
 package ru.otus.spring05.dao;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -40,7 +41,7 @@ public class SimpleGenreDao implements GenreDao {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         statement.update("DELETE FROM genre WHERE id=:id", attr);
@@ -52,7 +53,7 @@ public class SimpleGenreDao implements GenreDao {
     }
 
     @Override
-    public Genre getByID(int id) {
+    public Genre getByID(long id) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("id", id);
         return statement.queryForObject("SELECT * FROM genre WHERE id=:id LIMIT 1", attr, new GenreMapper());
@@ -69,6 +70,10 @@ public class SimpleGenreDao implements GenreDao {
     public Genre getByName(String name) {
         final HashMap<String, Object> attr = new HashMap<>();
         attr.put("name", name);
-        return statement.queryForObject("SELECT * FROM genre WHERE name LIKE :name LIMIT 1", attr, new GenreMapper());
+        try {
+            return statement.queryForObject("SELECT * FROM genre WHERE name LIKE :name LIMIT 1", attr, new GenreMapper());
+        }catch (DataAccessException e){
+            return null;
+        }
     }
 }
