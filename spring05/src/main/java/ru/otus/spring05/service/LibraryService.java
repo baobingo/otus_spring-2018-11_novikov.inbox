@@ -1,18 +1,22 @@
 package ru.otus.spring05.service;
 
+import ru.otus.spring05.domain.Book;
+
+import java.util.List;
+
 public interface LibraryService {
     int bookCount();
     int authorCount();
     int genreCount();
 
-    String allBook();
-    String authorsBooks(String authorsName);
-    String genresBooks(String genresTitle);
+    List<Book> allBook();
+    List<Book> authorsBooks(String authorsName);
+    List<Book> genresBooks(String genresTitle);
 
     void addBook(String booksName, String authorsName, String genresTitle);
     void addAuthor(String name);
     void addGenre(String name);
-    void deleteBookById(String id);
-    void deleteAuthorById(String id);
-    void deleteGenreById(String id);
+    void deleteBookById(long id);
+    void deleteAuthorById(long id);
+    void deleteGenreById(long id);
 }

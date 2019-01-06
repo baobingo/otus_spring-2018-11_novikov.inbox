@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.dao.*;
+import ru.otus.spring05.ui.SimpleHelper;
 
 @ExtendWith({SpringExtension.class})
 @JdbcTest
@@ -37,17 +38,17 @@ class SimpleLibraryServiceTest {
     @Test
     void allBook() {
         Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n" +
-                "Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n", libraryService.allBook());
+                "Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n", SimpleHelper.booksToText(libraryService.allBook()));
     }
 
     @Test
     void authorsBooks() {
-        Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n", libraryService.authorsBooks("Author #1"));
+        Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n", SimpleHelper.booksToText(libraryService.authorsBooks("Author #1")));
     }
 
     @Test
     void genresBooks() {
-        Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n", libraryService.genresBooks("Genre #1"));
+        Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n", SimpleHelper.booksToText(libraryService.genresBooks("Genre #1")));
     }
 
     @Test
@@ -55,7 +56,7 @@ class SimpleLibraryServiceTest {
         libraryService.addBook("Fairytale", "Author #1", "folk");
         Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n" +
                 "Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n" +
-                "Fairytale ID: 3 Author: Author #1 Genre: folk\n" , libraryService.allBook());
+                "Fairytale ID: 3 Author: Author #1 Genre: folk\n" , SimpleHelper.booksToText(libraryService.allBook()));
     }
 
     @Test
@@ -72,19 +73,19 @@ class SimpleLibraryServiceTest {
 
     @Test
     void deleteBookById() {
-        libraryService.deleteBookById("1");
-        Assert.assertEquals("Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n", libraryService.allBook());
+        libraryService.deleteBookById(1);
+        Assert.assertEquals("Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n", SimpleHelper.booksToText(libraryService.allBook()));
     }
 
     @Test
     void deleteAuthorById() {
-        libraryService.deleteAuthorById("2");
+        libraryService.deleteAuthorById(2);
         Assert.assertEquals(1, libraryService.bookCount());
     }
 
     @Test
     void deleteGenreById() {
-        libraryService.deleteGenreById("1");
+        libraryService.deleteGenreById(1);
         Assert.assertEquals(1, libraryService.bookCount());
     }
 }

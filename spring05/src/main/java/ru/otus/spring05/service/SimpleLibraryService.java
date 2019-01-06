@@ -8,8 +8,8 @@ import ru.otus.spring05.domain.Author;
 import ru.otus.spring05.domain.Book;
 import ru.otus.spring05.domain.Genre;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class SimpleLibraryService implements LibraryService {
@@ -40,20 +40,20 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public String allBook() {
-        return bookDao.getAll().stream().map(x->x.getName() + " ID: " + x.getId() + " Author: " + x.getAuthor().getName() + " Genre: " + x.getGenre().getName()+"\n").collect(Collectors.joining());
+    public List<Book> allBook() {
+        return bookDao.getAll();
     }
 
     @Override
-    public String authorsBooks(String authorsName) {
+    public List<Book> authorsBooks(String authorsName) {
         Author author = authorDao.getByName(authorsName);
-        return bookDao.getByAuthor(author).stream().map(x->x.getName() + " ID: " + x.getId() + " Author: " + x.getAuthor().getName() + " Genre: " + x.getGenre().getName()+"\n").collect(Collectors.joining());
+        return bookDao.getByAuthor(author);
     }
 
     @Override
-    public String genresBooks(String genresTitle) {
+    public List<Book> genresBooks(String genresTitle) {
         Genre genre = genreDao.getByName(genresTitle);
-        return bookDao.getByGenre(genre).stream().map(x->x.getName() + " ID: " + x.getId() + " Author: " + x.getAuthor().getName() + " Genre: " + x.getGenre().getName()+"\n").collect(Collectors.joining());
+        return bookDao.getByGenre(genre);
     }
 
 
@@ -88,17 +88,17 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public void deleteBookById(String id) {
-        bookDao.deleteById(Long.parseLong(id));
+    public void deleteBookById(long id) {
+        bookDao.deleteById(id);
     }
 
     @Override
-    public void deleteAuthorById(String id) {
-        authorDao.deleteById(Long.parseLong(id));
+    public void deleteAuthorById(long id) {
+        authorDao.deleteById(id);
     }
 
     @Override
-    public void deleteGenreById(String id) {
-        genreDao.deleteById(Long.parseLong(id));
+    public void deleteGenreById(long id) {
+        genreDao.deleteById(id);
     }
 }

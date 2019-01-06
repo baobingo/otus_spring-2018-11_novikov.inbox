@@ -46,17 +46,17 @@ public class SimpleShellUI implements Help.Command {
 
     @ShellMethod("All Book")
     public String allbook(){
-        return libraryService.allBook();
+        return SimpleHelper.booksToText(libraryService.allBook());
     }
 
     @ShellMethod("Get book by authors")
     public String authorsbook(@ShellOption String author){
-        return libraryService.authorsBooks(author);
+        return SimpleHelper.booksToText(libraryService.authorsBooks(author));
     }
 
     @ShellMethod("Get book by genre")
     public String genresbook(@ShellOption String genre){
-        return libraryService.genresBooks(genre);
+        return SimpleHelper.booksToText(libraryService.genresBooks(genre));
     }
 
     @ShellMethod("Add book")
@@ -75,17 +75,17 @@ public class SimpleShellUI implements Help.Command {
     }
 
     @ShellMethod("Delete book by id")
-    public void deletebook(@ShellOption String id){
+    public void deletebook(@ShellOption long id){
         libraryService.deleteBookById(id);
     }
 
     @ShellMethod("Delete author by id")
-    public void deleteauthor(@ShellOption String id){
+    public void deleteauthor(@ShellOption long id){
         libraryService.deleteAuthorById(id);
     }
 
     @ShellMethod("Delete genre by id")
-    public void deletegenre(@ShellOption String id) {
+    public void deletegenre(@ShellOption long id) {
         libraryService.deleteGenreById(id);
     }
 }
