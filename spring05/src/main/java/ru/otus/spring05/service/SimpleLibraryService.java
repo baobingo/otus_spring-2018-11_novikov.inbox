@@ -58,21 +58,15 @@ public class SimpleLibraryService implements LibraryService {
 
 
     @Override
-    public void addBook(String booksName, String authorsName, String genresTitle) {
-        Author author = Optional.ofNullable(authorDao.getByName(authorsName)).orElseGet(()-> {
-            authorDao.insert(new Author(authorsName));
-            return authorDao.getByName(authorsName);
-        });
-        Genre genre = Optional.ofNullable(genreDao.getByName(genresTitle)).orElseGet(()-> {
-            genreDao.insert(new Genre(genresTitle));
-            return genreDao.getByName(genresTitle);
-        });
-
-        bookDao.insert(new Book(booksName, author, genre));
+    public void addBook(Book book) {
+        authorDao.insertOrId(book.getAuthor());
+        genreDao.insertOrId(book.getGenre());
+        bookDao.insert(book);
     }
 
     @Override
-    public void addAuthor(String name) {
+    public void addAuthor(Author author) {
+        String name = author.getName();
         Optional.ofNullable(authorDao.getByName(name)).orElseGet(()-> {
             authorDao.insert(new Author(name));
             return authorDao.getByName(name);
@@ -80,7 +74,8 @@ public class SimpleLibraryService implements LibraryService {
     }
 
     @Override
-    public void addGenre(String name) {
+    public void addGenre(Genre genre) {
+        String name = genre.getName();
         Optional.ofNullable(genreDao.getByName(name)).orElseGet(()-> {
             genreDao.insert(new Genre(name));
             return genreDao.getByName(name);

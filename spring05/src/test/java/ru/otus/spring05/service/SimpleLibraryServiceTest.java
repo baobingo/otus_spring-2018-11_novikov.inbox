@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring05.dao.*;
+import ru.otus.spring05.domain.Author;
+import ru.otus.spring05.domain.Book;
+import ru.otus.spring05.domain.Genre;
 import ru.otus.spring05.ui.SimpleHelper;
 
 @ExtendWith({SpringExtension.class})
@@ -53,7 +56,7 @@ class SimpleLibraryServiceTest {
 
     @Test
     void addBook() {
-        libraryService.addBook("Fairytale", "Author #1", "folk");
+        libraryService.addBook(new Book("Fairytale", new Author("Author #1"), new Genre("folk")));
         Assert.assertEquals("Book #1 ID: 1 Author: Author #1 Genre: Genre #1\n" +
                 "Book #2 ID: 2 Author: Author #2 Genre: Genre #2\n" +
                 "Fairytale ID: 3 Author: Author #1 Genre: folk\n" , SimpleHelper.booksToText(libraryService.allBook()));
@@ -61,13 +64,13 @@ class SimpleLibraryServiceTest {
 
     @Test
     void addAuthor() {
-        libraryService.addAuthor("Author #3");
+        libraryService.addAuthor(new Author("Author #3"));
         Assert.assertEquals(3, libraryService.authorCount());
     }
 
     @Test
     void addGenre() {
-        libraryService.addGenre("Genre #3");
+        libraryService.addGenre(new Genre("Genre #3"));
         Assert.assertEquals(3, libraryService.genreCount());
     }
 

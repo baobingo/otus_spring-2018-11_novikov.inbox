@@ -5,6 +5,9 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.shell.standard.commands.Help;
+import ru.otus.spring05.domain.Author;
+import ru.otus.spring05.domain.Book;
+import ru.otus.spring05.domain.Genre;
 import ru.otus.spring05.service.LibraryService;
 
 @ShellComponent
@@ -29,63 +32,63 @@ public class SimpleShellUI implements Help.Command {
                 "deletegenre [id] - Delete genre by id\n";
     }
 
-    @ShellMethod("Books count")
-    public int bookcount(){
+    @ShellMethod(value = "Books count", key = "bookcount")
+    public int bookCount(){
         return libraryService.bookCount();
     }
 
-    @ShellMethod("Authors count")
-    public int authorcount(){
+    @ShellMethod(value = "Authors count", key = "authorcount")
+    public int authorCount(){
         return libraryService.authorCount();
     }
 
-    @ShellMethod("Genres count")
-    public int genrecount(){
+    @ShellMethod(value = "Genres count", key = "genrecount")
+    public int genreCount(){
         return libraryService.genreCount();
     }
 
-    @ShellMethod("All Book")
-    public String allbook(){
+    @ShellMethod(value = "All Book", key = "allbook")
+    public String allBook(){
         return SimpleHelper.booksToText(libraryService.allBook());
     }
 
-    @ShellMethod("Get book by authors")
-    public String authorsbook(@ShellOption String author){
+    @ShellMethod(value = "Get book by authors", key = "authorsbook")
+    public String authorsBook(@ShellOption String author){
         return SimpleHelper.booksToText(libraryService.authorsBooks(author));
     }
 
-    @ShellMethod("Get book by genre")
-    public String genresbook(@ShellOption String genre){
+    @ShellMethod(value = "Get book by genre", key = "genresbook")
+    public String genresBook(@ShellOption String genre){
         return SimpleHelper.booksToText(libraryService.genresBooks(genre));
     }
 
-    @ShellMethod("Add book")
+    @ShellMethod(value = "Add book", key = "addbook")
     public void addbook(@ShellOption String name, @ShellOption String author, @ShellOption String genre){
-        libraryService.addBook(name, author, genre);
+        libraryService.addBook(new Book(name, new Author(author), new Genre(genre)));
     }
 
-    @ShellMethod("Add author")
-    public void addauthor(@ShellOption String author){
-        libraryService.addAuthor(author);
+    @ShellMethod(value = "Add author", key = "addauthor")
+    public void addAuthor(@ShellOption String author){
+        libraryService.addAuthor(new Author(author));
     }
 
-    @ShellMethod("Add genre")
-    public void addgenre(@ShellOption String genre){
-        libraryService.addGenre(genre);
+    @ShellMethod(value = "Add genre", key = "addgenre")
+    public void addGenre(@ShellOption String genre){
+        libraryService.addGenre(new Genre(genre));
     }
 
-    @ShellMethod("Delete book by id")
-    public void deletebook(@ShellOption long id){
+    @ShellMethod(value = "Delete book by id", key = "deletebook")
+    public void deleteBook(@ShellOption long id){
         libraryService.deleteBookById(id);
     }
 
-    @ShellMethod("Delete author by id")
-    public void deleteauthor(@ShellOption long id){
+    @ShellMethod(value = "Delete author by id", key = "deleteauthor")
+    public void deleteAuthor(@ShellOption long id){
         libraryService.deleteAuthorById(id);
     }
 
-    @ShellMethod("Delete genre by id")
-    public void deletegenre(@ShellOption long id) {
+    @ShellMethod(value = "Delete genre by id", key = "deletegenre")
+    public void deleteGenre(@ShellOption long id) {
         libraryService.deleteGenreById(id);
     }
 }

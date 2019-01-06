@@ -11,4 +11,5 @@ public interface AuthorDao {
     List<Author> getAll();
     Author getByID(long id);
     Author getByName(String name);
+    void insertOrId(Author author);
 }

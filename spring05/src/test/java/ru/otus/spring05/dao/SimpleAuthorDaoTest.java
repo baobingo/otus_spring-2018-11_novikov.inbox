@@ -56,4 +56,12 @@ class SimpleAuthorDaoTest {
         Author author = authorDao.getByName("Author #1");
         Assert.assertEquals("Author #1", author.getName());
     }
+
+    @Test
+    void insertOrId() {
+        Author author =  new Author("Author #1");
+        Assert.assertEquals(-1, author.getId());
+        authorDao.insertOrId(author);
+        Assert.assertEquals(1, author.getId());
+    }
 }

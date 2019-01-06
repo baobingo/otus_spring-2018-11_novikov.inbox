@@ -76,4 +76,19 @@ public class SimpleAuthorDao implements AuthorDao {
             return null;
         }
     }
+
+    @Override
+    public void insertOrId(Author author) {
+        final HashMap<String, Object> attr = new HashMap<>();
+        attr.put("name", author.getName());
+        try {
+            author.setId(statement.queryForObject("SELECT * FROM author WHERE name LIKE :name LIMIT 1", attr, new AuthorMapper()).getId());
+        }catch (DataAccessException e){
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            SqlParameterSource namedParameters = new MapSqlParameterSource();
+            ((MapSqlParameterSource)namedParameters).addValue("name", author.getName());
+            statement.update("INSERT INTO author(name) VALUES(:name)", namedParameters, keyHolder);
+            author.setId((long)keyHolder.getKey());
+        }
+    }
 }

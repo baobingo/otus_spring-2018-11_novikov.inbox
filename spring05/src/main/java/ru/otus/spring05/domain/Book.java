@@ -1,8 +1,5 @@
 package ru.otus.spring05.domain;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Book {
     private long id = -1;
     private String name;
@@ -40,5 +37,13 @@ public class Book {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 }

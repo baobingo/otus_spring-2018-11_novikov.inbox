@@ -37,7 +37,6 @@ public class SimpleGenreDao implements GenreDao {
         ((MapSqlParameterSource)namedParameters).addValue("name", genre.getName());
         statement.update("INSERT INTO genre(name) VALUES(:name)", namedParameters, keyHolder);
         genre.setId((long)keyHolder.getKey());
-
     }
 
     @Override
@@ -74,6 +73,21 @@ public class SimpleGenreDao implements GenreDao {
             return statement.queryForObject("SELECT * FROM genre WHERE name LIKE :name LIMIT 1", attr, new GenreMapper());
         }catch (DataAccessException e){
             return null;
+        }
+    }
+
+    @Override
+    public void insertOrId(Genre genre) {
+        final HashMap<String, Object> attr = new HashMap<>();
+        attr.put("name", genre.getName());
+        try {
+            genre.setId(statement.queryForObject("SELECT * FROM genre WHERE name LIKE :name LIMIT 1", attr, new GenreMapper()).getId());
+        }catch (DataAccessException e){
+            KeyHolder keyHolder = new GeneratedKeyHolder();
+            SqlParameterSource namedParameters = new MapSqlParameterSource();
+            ((MapSqlParameterSource)namedParameters).addValue("name", genre.getName());
+            statement.update("INSERT INTO genre(name) VALUES(:name)", namedParameters, keyHolder);
+            genre.setId((long)keyHolder.getKey());
         }
     }
 }

@@ -56,4 +56,16 @@ class SimpleGenreDaoTest {
         Genre genre = genreDao.getByName("Genre #1");
         Assert.assertEquals("Genre #1", genre.getName());
     }
+
+    @Test
+    void insertOrId() {
+        Genre genre = new Genre("Genre #1");
+        Assert.assertEquals(-1, genre.getId());
+        genreDao.insertOrId(genre);
+        Assert.assertEquals(1, genre.getId());
+        genre = new Genre("Genre #3");
+        Assert.assertEquals(-1, genre.getId());
+        genreDao.insertOrId(genre);
+        Assert.assertEquals(3, genre.getId());
+    }
 }
