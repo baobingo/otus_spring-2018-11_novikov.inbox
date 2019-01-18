@@ -50,13 +50,12 @@ class SimpleGenreRepoTest {
 
     @Test
     void getByID() {
-        Assert.assertEquals("Genre #2", genreRepo.getByID(2).getName());
+        Assert.assertEquals(true, genreRepo.getByID(2).isPresent());
     }
 
     @Test
     void getByName() {
-        Genre genre = genreRepo.getByName("Genre #1");
-        Assert.assertEquals("Genre #1", genre.getName());
+        Assert.assertEquals(true, genreRepo.getByName("Genre #1").isPresent());
     }
 
     @Test

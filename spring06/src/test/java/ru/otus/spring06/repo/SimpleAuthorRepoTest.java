@@ -50,13 +50,13 @@ class SimpleAuthorRepoTest {
 
     @Test
     void getByID() {
-        Assert.assertEquals("Author #2", authorRepo.getByID(2).getName());
+        Assert.assertEquals(true, authorRepo.getByID(2).isPresent());
     }
 
     @Test
     void getByName() {
-        Author author = authorRepo.getByName("Author #1");
-        Assert.assertEquals("Author #1", author.getName());
+        Assert.assertEquals(true, authorRepo.getByName("Author #1").isPresent());
+        Assert.assertEquals(false, authorRepo.getByName("Author #5").isPresent());
     }
 
     @Test

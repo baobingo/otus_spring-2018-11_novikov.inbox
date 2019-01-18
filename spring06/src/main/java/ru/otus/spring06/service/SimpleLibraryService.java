@@ -10,8 +10,8 @@ import ru.otus.spring06.domain.Book;
 import ru.otus.spring06.domain.Genre;
 import ru.otus.spring06.domain.Review;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SimpleLibraryService implements LibraryService {
@@ -50,14 +50,12 @@ public class SimpleLibraryService implements LibraryService {
 
     @Override
     public List<Book> authorsBooks(String authorsName) {
-        Author author = authorRepo.getByName(authorsName);
-        return bookRepo.getByAuthor(author);
+        return authorRepo.getByName(authorsName).map(bookRepo::getByAuthor).orElse(new ArrayList<>());
     }
 
     @Override
     public List<Book> genresBooks(String genresTitle) {
-        Genre genre = genreRepo.getByName(genresTitle);
-        return bookRepo.getByGenre(genre);
+        return genreRepo.getByName(genresTitle).map(bookRepo::getByGenre).orElse(new ArrayList<>());
     }
 
 
@@ -71,19 +69,17 @@ public class SimpleLibraryService implements LibraryService {
     @Override
     public void addAuthor(Author author) {
         String name = author.getName();
-        Optional.ofNullable(authorRepo.getByName(name)).orElseGet(()-> {
+        if(!authorRepo.getByName(name).isPresent()){
             authorRepo.insert(new Author(name));
-            return authorRepo.getByName(name);
-        });
+        }
     }
 
     @Override
     public void addGenre(Genre genre) {
         String name = genre.getName();
-        Optional.ofNullable(genreRepo.getByName(name)).orElseGet(()-> {
-            genreRepo.insert(new Genre(name));
-            return genreRepo.getByName(name);
-        });
+        if(!genreRepo.getByName(name).isPresent()){
+            genreRepo.insert(genre);
+        }
     }
 
     @Override

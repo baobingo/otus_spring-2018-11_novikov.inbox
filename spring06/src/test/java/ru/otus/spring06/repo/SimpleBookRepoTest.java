@@ -34,8 +34,8 @@ class SimpleBookRepoTest {
 
     @Test
     void insert() {
-        Author author = authorRepo.getByID(1);
-        Genre genre = genreRepo.getByID(2);
+        Author author = authorRepo.getByID(1).get();
+        Genre genre = genreRepo.getByID(2).get();
         System.out.println(genre.getId());
         Book book = new Book("Book #3", author, genre);
         bookRepo.insert(book);
@@ -63,12 +63,12 @@ class SimpleBookRepoTest {
 
     @Test
     void getByAuthor() {
-        Author author =  authorRepo.getByID(2);
+        Author author =  authorRepo.getByID(2).get();
         List<Book> books = bookRepo.getByAuthor(author);
         Assert.assertEquals("Book #2", books.get(0).getName());
         Assert.assertEquals(1, books.size());
 
-        Genre genre = genreRepo.getByID(2);
+        Genre genre = genreRepo.getByID(2).get();
         bookRepo.insert(new Book("Book #3", author, genre));
         books = bookRepo.getByAuthor(author);
         Assert.assertEquals(2, books.size());
@@ -79,7 +79,7 @@ class SimpleBookRepoTest {
         Genre genre = new Genre("Genre #3");
         genreRepo.insert(genre);
 
-        bookRepo.insert(new Book("Book #3", authorRepo.getByID(1), genre));
+        bookRepo.insert(new Book("Book #3", authorRepo.getByID(1).get(), genre));
         Assert.assertEquals(3, bookRepo.count());
 
         List<Book> books = bookRepo.getByGenre(genre);

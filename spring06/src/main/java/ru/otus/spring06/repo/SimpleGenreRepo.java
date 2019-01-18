@@ -6,6 +6,7 @@ import ru.otus.spring06.domain.Genre;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("JpaQlInspection")
 @Repository
@@ -40,20 +41,24 @@ public class SimpleGenreRepo implements GenreRepo {
     }
 
     @Override
-    public Genre getByID(long id) {
-        TypedQuery<Genre> typedQuery = em.createQuery("select g from Genre g where g.id=:id", Genre.class);
-        typedQuery.setParameter("id", id);
-        return typedQuery.getSingleResult();
+    public Optional<Genre> getByID(long id) {
+        try {
+            TypedQuery<Genre> typedQuery = em.createQuery("select g from Genre g where g.id=:id", Genre.class);
+            typedQuery.setParameter("id", id);
+            return Optional.of(typedQuery.getSingleResult());
+        }catch (NoResultException e){
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Genre getByName(String name) {
+    public Optional<Genre> getByName(String name) {
         try {
             TypedQuery<Genre> typedQuery = em.createQuery("select g from Genre g where g.name like :name", Genre.class);
             typedQuery.setParameter("name", name);
-            return typedQuery.getSingleResult();
+            return Optional.of(typedQuery.getSingleResult());
         }catch (NoResultException e){
-            return null;
+            return Optional.empty();
         }
     }
 

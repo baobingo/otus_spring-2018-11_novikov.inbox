@@ -6,6 +6,7 @@ import ru.otus.spring06.domain.Author;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("JpaQlInspection")
 @Repository
@@ -16,7 +17,7 @@ public class SimpleAuthorRepo implements AuthorRepo {
 
     @Override
     public int count() {
-        return em.createQuery("select count(g) from Author g", Long.class).getSingleResult().intValue();
+        return em.createQuery("select count(a) from Author a", Long.class).getSingleResult().intValue();
     }
 
     @Override
@@ -28,40 +29,45 @@ public class SimpleAuthorRepo implements AuthorRepo {
     @Override
     @Transactional
     public void deleteById(long id){
-        Query query = em.createQuery("delete from Author g where g.id=:id");
+        Query query = em.createQuery("delete from Author a where a.id=:id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
 
     @Override
     public List<Author> getAll() {
-        TypedQuery<Author> typedQuery = em.createQuery("select g from Author g", Author.class);
+        TypedQuery<Author> typedQuery = em.createQuery("select a from Author a", Author.class);
         return typedQuery.getResultList();
     }
 
     @Override
-    public Author getByID(long id) {
-        TypedQuery<Author> typedQuery = em.createQuery("select g from Author g where g.id=:id", Author.class);
-        typedQuery.setParameter("id", id);
-        return typedQuery.getSingleResult();
+    public Optional<Author> getByID(long id) {
+        try {
+            TypedQuery<Author> typedQuery = em.createQuery("select a from Author a where a.id=:id", Author.class);
+            typedQuery.setParameter("id", id);
+            return Optional.of(typedQuery.getSingleResult());
+        }catch (NoResultException e){
+            return Optional.empty();
+        }
     }
 
     @Override
-    public Author getByName(String name) {
-        try{
-        TypedQuery<Author> typedQuery = em.createQuery("select g from Author g where g.name like :name", Author.class);
-        typedQuery.setParameter("name", name);
-        return typedQuery.getSingleResult();
-        }catch (NoResultException e){
-            return null;
+    public Optional<Author> getByName(String name) {
+        try {
+            TypedQuery<Author> typedQuery = em.createQuery("select a from Author a where a.name like :name", Author.class);
+            typedQuery.setParameter("name", name);
+            return Optional.of(typedQuery.getSingleResult());
+        }catch(NoResultException e){
+            return Optional.empty();
         }
+
     }
 
     @Override
     @Transactional
     public void insertOrId(Author author) {
         try {
-            TypedQuery<Author> typedQuery = em.createQuery("select g from Author g where g.name like :name", Author.class);
+            TypedQuery<Author> typedQuery = em.createQuery("select a from Author a where a.name like :name", Author.class);
             typedQuery.setParameter("name", author.getName());
             Author persistAuthor = typedQuery.getSingleResult();
             author.setId(persistAuthor.getId());
