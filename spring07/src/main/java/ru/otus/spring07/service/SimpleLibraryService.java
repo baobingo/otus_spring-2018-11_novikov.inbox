@@ -59,8 +59,8 @@ public class SimpleLibraryService implements LibraryService {
 
     @Override
     public void addBook(Book book) {
-        authorRepo.findByName(book.getAuthor().getName()).map(x->{book.setAuthor(x); return x;}).orElse(authorRepo.save(book.getAuthor()));
-        genreRepo.findByName(book.getGenre().getName()).map(x->{book.setGenre(x); return x;}).orElse(genreRepo.save(book.getGenre()));
+        authorRepo.findByName(book.getAuthor().getName()).ifPresent(book::setAuthor);
+        genreRepo.findByName(book.getGenre().getName()).ifPresent(book::setGenre);
         bookRepo.save(book);
     }
 

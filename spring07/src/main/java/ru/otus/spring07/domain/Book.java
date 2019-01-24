@@ -10,10 +10,10 @@ public class Book {
     private long id = -1;
     private String name;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE})
     private Author author;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.MERGE})
     private Genre genre;
 
     public Book() {
