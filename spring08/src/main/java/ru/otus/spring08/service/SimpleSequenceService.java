@@ -4,9 +4,7 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
@@ -16,10 +14,14 @@ import ru.otus.spring08.domain.Sequences;
 @Service
 public class SimpleSequenceService implements SequenceService{
 
-    @Value("${spring.data.mongodb.customseq}")
     private String customSequence;
 
-    @Autowired private MongoTemplate mongo;
+    private MongoTemplate mongo;
+
+    public SimpleSequenceService(@Value("${spring.data.mongodb.customseq}")String customSequence, MongoTemplate mongo) {
+        this.customSequence = customSequence;
+        this.mongo = mongo;
+    }
 
     public int getNextSequence()
     {

@@ -1,7 +1,6 @@
 package ru.otus.spring08.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.stereotype.Service;
@@ -16,13 +15,14 @@ import java.util.Optional;
 @Service
 public class SimpleLibraryService implements LibraryService {
 
-    @Autowired private BookRepo bookRepo;
-    @Autowired private SequenceService sequenceService;
-    @Autowired private MongoTemplate mongoTemplate;
+    private BookRepo bookRepo;
+    private SequenceService sequenceService;
+    private MongoTemplate mongoTemplate;
 
-    public SimpleLibraryService(BookRepo bookRepo, SequenceService sequenceService) {
+    public SimpleLibraryService(BookRepo bookRepo, SequenceService sequenceService, MongoTemplate mongoTemplate) {
         this.bookRepo = bookRepo;
         this.sequenceService = sequenceService;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class SimpleLibraryService implements LibraryService {
 
     @Override
     public List<Book> authorsBooks(String authorsName) {
-        return bookRepo.findBooksByAuthor_Name(authorsName);
+        return bookRepo.findBooksByAuthorName(authorsName);
     }
 
     @Override
     public List<Book> genresBooks(String genresTitle) {
-        return bookRepo.findBooksByGenre_Name(genresTitle);
+        return bookRepo.findBooksByGenreName(genresTitle);
     }
 
 
@@ -83,7 +83,7 @@ public class SimpleLibraryService implements LibraryService {
 
     @Override
     public void addReview(Review review, long bookId) {
-        review.set_id(sequenceService.getNextSequence());
+        review.setReviewId(sequenceService.getNextSequence());
         bookRepo.findById(bookId).ifPresent(x->{x.addReview(review); bookRepo.save(x);});
     }
 

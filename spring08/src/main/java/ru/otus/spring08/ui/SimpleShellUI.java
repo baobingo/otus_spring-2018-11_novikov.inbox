@@ -14,8 +14,11 @@ import ru.otus.spring08.service.LibraryService;
 @ShellComponent
 public class SimpleShellUI implements Help.Command {
 
-    @Autowired
     private LibraryService libraryService;
+
+    public SimpleShellUI(LibraryService libraryService) {
+        this.libraryService = libraryService;
+    }
 
     @ShellMethod("Help info")
     public String help(){

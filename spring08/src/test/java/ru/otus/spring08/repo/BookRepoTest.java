@@ -43,16 +43,16 @@ class BookRepoTest {
     }
 
     @Test
-    void findBooksByAuthor_Name(){
-        assertEquals(1, bookRepo.findBooksByAuthor_Name("Author #1").size());
-        assertEquals(1, bookRepo.findBooksByAuthor_Name("Author #2").size());
-        assertEquals(1, bookRepo.findBooksByAuthor_Name("Author #3").size());
+    void findBooksByAuthorName(){
+        assertEquals(1, bookRepo.findBooksByAuthorName("Author #1").size());
+        assertEquals(1, bookRepo.findBooksByAuthorName("Author #2").size());
+        assertEquals(1, bookRepo.findBooksByAuthorName("Author #3").size());
     }
 
     @Test
-    void findBooksBy_Name(){
-        assertEquals(1, bookRepo.findBooksByGenre_Name("Genre #1").size());
-        assertEquals(1, bookRepo.findBooksByGenre_Name("Genre #2").size());
-        assertEquals(1, bookRepo.findBooksByGenre_Name("Genre #3").size());
+    void findBooksByName(){
+        assertEquals(1, bookRepo.findBooksByGenreName("Genre #1").size());
+        assertEquals(1, bookRepo.findBooksByGenreName("Genre #2").size());
+        assertEquals(1, bookRepo.findBooksByGenreName("Genre #3").size());
     }
 }

@@ -2,6 +2,7 @@ package ru.otus.spring08.bee.changelog;
 
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Update;
 import ru.otus.spring08.domain.Author;
@@ -19,10 +20,10 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 public class DatabaseChangelog {
 
     @ChangeSet(order = "001", id = "startupFill", author = "baobingo")
-    public void startupFill(MongoTemplate mongoTemplate) {
+    public void startupFill(MongoTemplate mongoTemplate, Environment environment) {
         IntStream.range(0, 10).forEach(i ->{
             Book book = new Book("Book #" + i, new Author("Author #" + i), new Genre("Genre #" + i));
-            Sequences counter = mongoTemplate.findAndModify(query(where("_id").is("customSequences")), new Update().inc("seq",1), options().returnNew(true).upsert(true), Sequences.class);
+            Sequences counter = mongoTemplate.findAndModify(query(where("_id").is(environment.getProperty("spring.data.mongodb.customseq"))), new Update().inc("seq",1), options().returnNew(true).upsert(true), Sequences.class);
             book.setId(counter.getSeq());
             mongoTemplate.insert(book);
         });

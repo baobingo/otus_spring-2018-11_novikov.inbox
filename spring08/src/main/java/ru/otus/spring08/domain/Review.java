@@ -2,7 +2,7 @@ package ru.otus.spring08.domain;
 
 public class Review {
 
-    private int _id;
+    private int reviewId;
     private String author;
     private String body;
 
@@ -19,17 +19,17 @@ public class Review {
         return body;
     }
 
-    public int get_id() {
-        return _id;
+    public int getReviewId() {
+        return reviewId;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
     }
 
     @Override
     public String toString() {
-        return "[ID] " + get_id()
+        return "[ID] " + getReviewId()
                 + " [AUTHOR] " + getAuthor()
                 + " [REVIEW] " + getBody() +"\n";
     }

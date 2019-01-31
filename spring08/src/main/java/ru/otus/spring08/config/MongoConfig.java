@@ -11,11 +11,13 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "ru.otus.spring08.repo")
 public class MongoConfig extends AbstractMongoConfiguration {
 
-    @Value("${spring.data.mongodb.database}")
     private String dbName;
-
-    @Value("${spring.data.mongodb.host}")
     private String dbHost;
+
+    public MongoConfig(@Value("${spring.data.mongodb.database}")String dbName, @Value("${spring.data.mongodb.host}")String dbHost) {
+        this.dbName = dbName;
+        this.dbHost = dbHost;
+    }
 
     @Override
     @Bean

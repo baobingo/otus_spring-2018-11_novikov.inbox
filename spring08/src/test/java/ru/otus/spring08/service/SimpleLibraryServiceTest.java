@@ -14,11 +14,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.otus.spring08.config.MongoConfig;
+import ru.otus.spring08.domain.*;
 import ru.otus.spring08.repo.*;
-import ru.otus.spring08.domain.Author;
-import ru.otus.spring08.domain.Book;
-import ru.otus.spring08.domain.Genre;
-import ru.otus.spring08.domain.Review;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -55,6 +52,7 @@ class SimpleLibraryServiceTest {
     @AfterEach
     void clean() {
         mongoTemplate.dropCollection(Book.class);
+        mongoTemplate.dropCollection(Sequences.class);
     }
 
 
@@ -82,13 +80,13 @@ class SimpleLibraryServiceTest {
 
     @Test
     void authorsBooks() {
-        when(bookRepo.findBooksByAuthor_Name(any())).thenReturn(Arrays.asList(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
+        when(bookRepo.findBooksByAuthorName(any())).thenReturn(Arrays.asList(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
         assertEquals(1, libraryService.authorsBooks("Author #1").size());
     }
 
     @Test
     void genresBooks() {
-        when(bookRepo.findBooksByGenre_Name(any())).thenReturn(Arrays.asList(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
+        when(bookRepo.findBooksByGenreName(any())).thenReturn(Arrays.asList(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
         assertEquals(1, libraryService.genresBooks("Genre #1").size());
     }
 
