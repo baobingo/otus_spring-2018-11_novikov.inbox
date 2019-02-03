@@ -4,17 +4,13 @@ import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Update;
 import ru.otus.spring08.domain.Author;
 import ru.otus.spring08.domain.Book;
 import ru.otus.spring08.domain.Genre;
-import ru.otus.spring08.domain.Sequences;
+import ru.otus.spring08.service.SequenceService;
+import ru.otus.spring08.service.SimpleSequenceService;
 
 import java.util.stream.IntStream;
-
-import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
-import static org.springframework.data.mongodb.core.query.Criteria.where;
-import static org.springframework.data.mongodb.core.query.Query.query;
 
 @ChangeLog
 public class DatabaseChangelog {
@@ -23,8 +19,8 @@ public class DatabaseChangelog {
     public void startupFill(MongoTemplate mongoTemplate, Environment environment) {
         IntStream.range(0, 10).forEach(i ->{
             Book book = new Book("Book #" + i, new Author("Author #" + i), new Genre("Genre #" + i));
-            Sequences counter = mongoTemplate.findAndModify(query(where("_id").is(environment.getProperty("spring.data.mongodb.customseq"))), new Update().inc("seq",1), options().returnNew(true).upsert(true), Sequences.class);
-            book.setId(counter.getSeq());
+            SequenceService sequenceService = new SimpleSequenceService(environment.getProperty("spring.data.mongodb.customseq"), mongoTemplate);
+            book.setId(sequenceService.getNextSequence());
             mongoTemplate.insert(book);
         });
     }
