@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/assets/bootstrap-4.2.1-dist/css/bootstrap.min.css">
+    <title>List of all books</title>
+</head>
+<body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">List of all books</h1>
+            <p class="lead">Create, read, update, delete</p>
+        </div>
+    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item" th:each="book: ${books}">
+                            - <span th:text="*{book.id}"></span>
+                            <span th:text="*{book.name}"></span>
+                            <span th:text="*{book.author.name}"></span>
+                            <span th:text="*{book.genre.name}"></span>
+                            <div style="padding: 0 5px; float: right;">
+                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/review(id=${book.id})}">Read review</a></span>
+                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/edit(id=${book.id})}">Edit</a></span>
+                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/delete(id=${book.id})}">Delete</a></span>
+                            </div>
+                        </li>
+                    </ul>
+                    <p></p>
+                    <a class="btn btn-primary" href="/books/add" role="button">Add book</a>
+                </div>
+            </div>
+        </div>
+<script src="/assets/js/jquery-3.0.0.slim.min.js"></script>
+<script src="/assets/bootstrap-4.2.1-dist/js/bootstrap.bundle.js"></script>
+</body>
+</html>
