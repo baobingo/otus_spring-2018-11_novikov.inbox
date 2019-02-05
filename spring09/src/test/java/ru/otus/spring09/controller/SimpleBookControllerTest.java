@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(BookController.class)
+@WebMvcTest(SimpleBookController.class)
 class SimpleBookControllerTest {
 
     @Autowired
@@ -46,12 +46,12 @@ class SimpleBookControllerTest {
     @Test
     void main() throws Exception{
         when(bookRepository.findAll()).thenReturn(Arrays.asList(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
-        mockMvc.perform(get("/books")).andExpect(model().attribute("books", hasSize(1))).andExpect(status().isOk());
+        mockMvc.perform(get("/books")).andExpect(view().name("books")).andExpect(model().attribute("books", hasSize(1))).andExpect(status().isOk());
     }
 
     @Test
     void deleteBook() throws Exception{
-        mockMvc.perform(get("/books/delete/?id=1")).andExpect(status().is3xxRedirection());
+        mockMvc.perform(post("/books/delete/?id=1")).andExpect(status().is3xxRedirection());
         verify(bookRepository).deleteById(anyLong());
     }
 
@@ -69,7 +69,7 @@ class SimpleBookControllerTest {
     @Test
     void editBook() throws Exception{
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
-        mockMvc.perform(get("/books/edit/?id=1")).andExpect(model().attributeExists("book")).andExpect(status().isOk());
+        mockMvc.perform(get("/books/edit/?id=1")).andExpect(view().name("editbook")).andExpect(model().attributeExists("book")).andExpect(status().isOk());
     }
 
     @Test
@@ -81,6 +81,6 @@ class SimpleBookControllerTest {
     @Test
     void review() throws Exception{
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(mock(Book.class)));
-        mockMvc.perform(get("/books/review/").param("id", "1")).andExpect(model().attributeExists("reviews")).andExpect(status().isOk());
+        mockMvc.perform(get("/books/review/").param("id", "1")).andExpect(view().name("review")).andExpect(model().attributeExists("reviews")).andExpect(status().isOk());
     }
 }

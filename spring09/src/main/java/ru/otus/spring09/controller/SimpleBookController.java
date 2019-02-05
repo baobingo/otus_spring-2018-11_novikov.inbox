@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class SimpleBookController implements BookController {
+public class SimpleBookController {
 
     private BookRepository bookRepository;
     private SequenceService sequenceService;
@@ -26,13 +26,11 @@ public class SimpleBookController implements BookController {
         this.sequenceService = sequenceService;
     }
 
-    @Override
     @GetMapping("/")
     public void index(HttpServletResponse response) throws IOException{
         response.sendRedirect("/books");
     }
 
-    @Override
     @GetMapping("/books")
     public String main(Model model) {
         List<Book> bookList = bookRepository.findAll();
@@ -40,14 +38,12 @@ public class SimpleBookController implements BookController {
         return "books";
     }
 
-    @Override
-    @GetMapping("/books/delete")
+    @PostMapping("/books/delete")
     public void deleteBook(HttpServletResponse response, @RequestParam("id") int bookId) throws IOException {
         bookRepository.deleteById((long)bookId);
         response.sendRedirect("/books");
     }
 
-    @Override
     @GetMapping("/books/add")
     public String addBook(Model model) {
         Book book = new Book();
@@ -55,7 +51,6 @@ public class SimpleBookController implements BookController {
         return "addbook";
     }
 
-    @Override
     @PostMapping("/books/add")
     public void actionAdd(HttpServletResponse response, @ModelAttribute(value = "book") Book book, BindingResult bindingResult) throws IOException{
         if (bindingResult.hasErrors()) {
@@ -66,7 +61,6 @@ public class SimpleBookController implements BookController {
         response.sendRedirect("/books");
     }
 
-    @Override
     @GetMapping("/books/edit")
     public String editBook(@RequestParam int id, Model model) throws IOException{
         Optional<Book> book = bookRepository.findById((long)id);
@@ -75,7 +69,6 @@ public class SimpleBookController implements BookController {
         return "editbook";
     }
 
-    @Override
     @PostMapping("/books/edit")
     public void editBook(HttpServletResponse response, @ModelAttribute(value = "book") Book book, BindingResult bindingResult) throws IOException{
         if (bindingResult.hasErrors()) {
@@ -90,7 +83,6 @@ public class SimpleBookController implements BookController {
         response.sendRedirect("/books");
     }
 
-    @Override
     @GetMapping("/books/review")
     public String review(@RequestParam int id, Model model) throws IOException {
         Optional<Book> book = bookRepository.findById((long)id);

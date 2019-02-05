@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataMongoTest
-@Import({MongoConfig.class, SimpleSequenceService.class})
+@Import(SimpleSequenceService.class)
 class BookRepositoryTest {
     @Autowired
     private BookRepository bookRepo;
