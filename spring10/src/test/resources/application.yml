@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      customseq: customSequences
+logging:
+        level:
+          org.springframework.data.mongodb.core.MongoTemplate: DEBUG
