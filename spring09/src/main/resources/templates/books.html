@@ -23,9 +23,12 @@
                             <span th:text="*{book.author.name}"></span>
                             <span th:text="*{book.genre.name}"></span>
                             <div style="padding: 0 5px; float: right;">
-                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/review(id=${book.id})}">Read review</a></span>
-                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/edit(id=${book.id})}">Edit</a></span>
-                                <span><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/delete(id=${book.id})}">Delete</a></span>
+                                <span style="display: inline-block"><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/review(id=${book.id})}"><button class="btn btn-primary">Reviews</button></a></span>
+                                <span style="display: inline-block"><a href="edit.html" th:href="@{__${#httpServletRequest.requestURI}__/edit(id=${book.id})}"><button class="btn btn-primary">Edit</button></a></span>
+                                <span style="display: inline-block"></spam><form action="/books/delete" method="post">
+                                    <input type="text" class="form-control" name="id" id="id" th:value="*{book.id}" hidden>
+                                    <button type="submit" class="btn btn-primary">X</button>
+                                </form></span>
                             </div>
                         </li>
                     </ul>
