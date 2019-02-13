@@ -54,7 +54,7 @@ class FormEdit extends Component{
     componentDidMount() {
         const {id} = this.props.match.params;
 
-        fetch(`http://localhost:8080/api/book/get/?id=${id}`).then(response=>
+        fetch(`http://localhost:8080/api/books/${id}`).then(response=>
             response.json()).then(json=>{
                 this.setState({id: json.id})
                 this.setState({name: json.name})
@@ -70,8 +70,8 @@ class FormEdit extends Component{
     handleSubmit(e){
         var form = document.querySelector('form')
 
-        fetch('http://localhost:8080/api/book/update', {
-            method: 'POST',
+        fetch('http://localhost:8080/api/books', {
+            method: 'PUT',
             body: new FormData(form)
         })
 

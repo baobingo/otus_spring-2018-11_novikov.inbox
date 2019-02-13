@@ -61,7 +61,7 @@ class FormAdd extends Component{
     handleSubmit(e){
         var form = document.querySelector('form')
 
-        fetch('http://localhost:8080/api/book/add', {
+        fetch('http://localhost:8080/api/books', {
             method: 'POST',
             body: new FormData(form)
         })

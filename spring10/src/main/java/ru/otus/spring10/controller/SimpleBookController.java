@@ -29,21 +29,21 @@ public class SimpleBookController {
         return bookRepository.findAll();
     }
 
-    @GetMapping("/api/book/reviews")
-    public List<Review> reviewsList(@RequestParam("id") String id) throws IOException{
+    @GetMapping("/api/books/{id}/reviews")
+    public List<Review> reviewsList(@PathVariable("id") String id) throws IOException{
         Optional<Book> optionalBook =  bookRepository.findById(Long.parseLong(id));
         optionalBook.orElseThrow(()->new IOException());
         return optionalBook.get().getReviews();
     }
 
-    @GetMapping("/api/book/get")
-    public Book getBookById(@RequestParam("id") String id) throws IOException{
+    @GetMapping("/api/books/{id}")
+    public Book getBookById(@PathVariable("id") String id) throws IOException{
         Optional<Book> optionalBook =  bookRepository.findById(Long.parseLong(id));
         optionalBook.orElseThrow(()->new IOException());
         return optionalBook.get();
     }
 
-    @PostMapping("/api/book/update")
+    @PutMapping("/api/books")
     public void updateBookById(@ModelAttribute(value = "book") Book book, BindingResult bindingResult) throws IOException{
         if (bindingResult.hasErrors()) {
             throw new IOException();
@@ -56,7 +56,7 @@ public class SimpleBookController {
         });
     }
 
-    @PostMapping("/api/book/add")
+    @PostMapping("/api/books")
     public void addBook(@ModelAttribute(value = "book") Book book, BindingResult bindingResult) throws IOException{
         if (bindingResult.hasErrors()) {
             throw new IOException();
@@ -65,8 +65,8 @@ public class SimpleBookController {
         bookRepository.insert(book);
     }
 
-    @GetMapping("/api/book/delete")
-    public void deleteBookById(@RequestParam("id") int id) throws IOException{
+    @DeleteMapping("/api/books/{id}")
+    public void deleteBookById(@PathVariable("id") int id) throws IOException{
         Optional<Book> optionalBook =  bookRepository.findById((long)id);
         optionalBook.orElseThrow(()->new IOException());
         bookRepository.delete(optionalBook.get());

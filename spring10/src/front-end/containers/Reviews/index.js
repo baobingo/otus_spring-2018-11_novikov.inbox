@@ -40,7 +40,7 @@ class Reviews extends Component{
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        fetch(`http://localhost:8080/api/book/reviews/?id=${id}`).then(response=>
+        fetch(`http://localhost:8080/api/books/${id}/reviews`).then(response=>
         response.json()).then(json=>this.setState({reviews: json}));
     }
 

@@ -15,7 +15,9 @@ class Books extends Component{
     }
 
     handleClick = value => event => {
-        fetch(`http://localhost:8080/api/book/delete/?id=${value}`);
+        fetch(`http://localhost:8080/api/books/${value}`, {
+            method: 'DELETE',
+        })
         setTimeout(()=>this.fetchData(), 1000);
     };
 

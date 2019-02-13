@@ -18,8 +18,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -49,7 +48,7 @@ class SimpleBookControllerTest {
 
     @Test
     void deleteBook() throws Exception{
-        mockMvc.perform(get("/api/book/delete/?id=1")).andExpect(status().isOk());
+        mockMvc.perform(delete("/api/books/1")).andExpect(status().isOk());
         verify(bookRepository).findById(1L);
     }
 
@@ -60,25 +59,25 @@ class SimpleBookControllerTest {
 
     @Test
     void actionAdd() throws Exception{
-        mockMvc.perform(post("/api/book/add")).andExpect(status().isOk());
+        mockMvc.perform(post("/api/books")).andExpect(status().isOk());
         verify(bookRepository).insert(any(Book.class));
     }
 
     @Test
     void editBook() throws Exception{
         when(bookRepository.findById(anyLong())).thenReturn(Optional.of(new Book("Book #1", new Author("Author #1"), new Genre("Genre #1"))));
-        mockMvc.perform(get("/api/book/get/?id=1").contentType(APPLICATION_JSON)).andExpect(jsonPath("$.name", is("Book #1"))).andExpect(status().isOk());
+        mockMvc.perform(get("/api/books/1").contentType(APPLICATION_JSON)).andExpect(jsonPath("$.name", is("Book #1"))).andExpect(status().isOk());
     }
 
     @Test
     void editBook1() throws Exception{
-        mockMvc.perform(post("/api/book/update")).andExpect(status().isOk());
+        mockMvc.perform(put("/api/books")).andExpect(status().isOk());
         verify(bookRepository).findById(anyLong());
     }
 
     @Test
     void review() throws Exception{
-        mockMvc.perform(get("/api/book/reviews/?id=1").contentType(APPLICATION_JSON)).andExpect(jsonPath("$", is("Error"))).andExpect(status().isOk());
+        mockMvc.perform(get("/api/books/1/reviews").contentType(APPLICATION_JSON)).andExpect(jsonPath("$", is("Error"))).andExpect(status().isOk());
         verify(bookRepository).findById(anyLong());
     }
 }
