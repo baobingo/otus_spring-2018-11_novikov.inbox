@@ -13,12 +13,12 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Component
-public class SimpleEndpointHandler {
+public class SimpleBookHandler {
 
     private BookRepositoryReactive repository;
     private SequenceService sequenceService;
 
-    public SimpleEndpointHandler(BookRepositoryReactive repository, SequenceService sequenceService) {
+    public SimpleBookHandler(BookRepositoryReactive repository, SequenceService sequenceService) {
         this.repository = repository;
         this.sequenceService = sequenceService;
     }
