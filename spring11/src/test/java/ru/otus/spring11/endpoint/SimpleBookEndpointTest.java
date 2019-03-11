@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import reactor.core.publisher.Mono;
@@ -12,6 +13,7 @@ import ru.otus.spring11.service.SequenceService;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @SpringBootTest
+@DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_CLASS)
 class SimpleBookEndpointTest {
 
     @Autowired
