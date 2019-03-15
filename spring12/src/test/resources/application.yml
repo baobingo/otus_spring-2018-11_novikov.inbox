@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      customseq: customSequences
+      database: 777_books_test
+      host: 127.0.0.1
+      port: 52300
+logging:
+        level:
+          org.springframework.data.mongodb.core.MongoTemplate: DEBUG

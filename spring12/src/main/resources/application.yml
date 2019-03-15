@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      database: 777_books
+      host: localhost
+      customseq: customSequences
+      port: 27017
