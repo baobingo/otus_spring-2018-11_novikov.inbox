@@ -26,3 +26,5 @@ export const fetchPut = (jsonObject) =>
     });
 
 export const fetchGetSingle = (id) => fetch(`/api/books/${id}`);
+
+export const fetchGetReviews = (id) => fetch(`/api/books/${id}/reviews`);

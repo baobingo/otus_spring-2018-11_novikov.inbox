@@ -12,6 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import CommentIcon from '@material-ui/icons/Comment';
 import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
+import {fetchGetReviews} from "../../Services/fetchUtil";
 
 
 const styles = theme => ({
@@ -40,13 +41,14 @@ class Reviews extends Component{
 
     componentDidMount() {
         const {id} = this.props.match.params;
-        fetch(`http://localhost:8080/api/books/${id}/reviews`).then(response=>
+        fetchGetReviews(id).then(response=>
         response.json()).then(json=>this.setState({reviews: json}));
     }
 
     render() {
 
         const { classes } = this.props;
+        const { reviews } = this.state;
 
         return(
             <div className={classes.root}>
@@ -54,7 +56,7 @@ class Reviews extends Component{
                     <Grid item md={12}>
                         <div className={classes.demo}>
                             <List >
-                                {this.state.reviews.map(review=>(
+                                {reviews.map(review=>(
                                     <ListItem key={review.reviewId}>
                                         <ListItemAvatar>
                                             <Avatar>
