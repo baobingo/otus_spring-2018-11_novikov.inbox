@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
@@ -8,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Cookies from 'universal-cookie';
+import {loginPost} from "../../Services/loginUtil";
 
 const styles = theme => ({
     container: {
@@ -48,7 +48,6 @@ class Login extends Component{
             message: ''
         }
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -59,10 +58,6 @@ class Login extends Component{
         }
     }
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
-
     handleSubmit(e){
         const formData = new FormData(document.querySelector('form'));
         const data = new URLSearchParams();
@@ -70,13 +65,7 @@ class Login extends Component{
         for (const [key, value]  of formData.entries()) {
             data.append(key, value);
         }
-        fetch('http://localhost:8080/login', {
-            method: 'POST',
-            body: data.toString(),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(response => {
+        loginPost(data).then(response => {
             if (response.status == 200) {
                 cookies.set('auth', 1)
                 this.setState({authenticated: true})
@@ -94,11 +83,12 @@ class Login extends Component{
     render() {
 
         const { classes } = this.props;
+        const { message, authenticated} = this.state;
 
         return(
             <div>
-                {this.state.message && (<h3>{this.state.message}</h3>)}
-                {!this.state.authenticated &&
+                {message && (<h3>{message}</h3>)}
+                {!authenticated &&
                 (<div className={classes.root}>
                     <Paper className={classes.paper}>
                         <Grid container wrap="nowrap" spacing={16}>
@@ -110,7 +100,6 @@ class Login extends Component{
                                         className={classes.textField}
                                         name="username"
                                         label="Username"
-                                        onChange={this.handleChange('username')}
                                         margin="normal"
 
                                     />
@@ -121,7 +110,6 @@ class Login extends Component{
                                         name="password"
                                         label="Password"
                                         type="password"
-                                        onChange={this.handleChange('password')}
                                         margin="normal"
                                     />
                                     <Button className={classes.textField} type="submit" variant="contained" color="primary">Login</Button>
