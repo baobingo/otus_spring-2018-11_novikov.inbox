@@ -37,16 +37,13 @@ const styles = theme => ({
     }
 });
 
-const BooksList = (props) => {
-    const { classes } = props;
-
-    return (
+const BooksList = ({classes, list, onClick}) => (
         <div className={classes.root}>
             <Paper className={classes.paper}>
             <Grid item md={12}>
                 <div className={classes.demo}>
                     <List >
-                        {props.list.map(books=>(
+                        {list.map(books=>(
                         <ListItem key={books.id}>
                             <ListItemAvatar>
                                 <Avatar>
@@ -55,7 +52,7 @@ const BooksList = (props) => {
                             </ListItemAvatar>
                             <ListItemText
                                 primary={books.name}
-                                secondary={books.author.name + ' ' + books.genre.name}
+                                secondary = {`${books.author.name} ${books.genre.name}`}
                             />
                             <ListItemSecondaryAction>
                                 <Link to={`/reviews/${books.id}`}>
@@ -68,7 +65,7 @@ const BooksList = (props) => {
                                         <EditIcon />
                                     </IconButton>
                                 </Link>
-                                <IconButton aria-label="Delete" onClick={props.onClick(books.id)}>
+                                <IconButton aria-label="Delete" onClick={onClick(books.id)}>
                                     <DeleteIcon />
                                 </IconButton>
                             </ListItemSecondaryAction>
@@ -81,8 +78,7 @@ const BooksList = (props) => {
             </Grid>
             </Paper>
         </div>
-    );
-}
+)
 
 BooksList.propTypes = {
     classes: PropTypes.object.isRequired,

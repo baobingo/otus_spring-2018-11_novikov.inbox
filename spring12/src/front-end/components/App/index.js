@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import './index.css';
+import React from 'react';
 import Main from '../Main'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,24 +15,18 @@ const styles = theme => ({
     }
 });
 
-class App extends Component {
-
-    render() {
-        const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <AppBar position="static" color="default">
-                    <Toolbar>
-                        <Typography variant="h6" color="inherit">
-                            Simple Book Repo
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <div><Main /></div>
-            </div>
-        );
-  }
-}
+const App = ({classes}) => (
+        <div className={classes.root}>
+            <AppBar position="static" color="default">
+                <Toolbar>
+                    <Typography variant="h6" color="inherit">
+                        Simple Book Repo
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Main/>
+        </div>
+)
 
 App.propTypes = {
     classes: PropTypes.object.isRequired,

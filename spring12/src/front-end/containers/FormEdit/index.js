@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +6,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { fetchPut, fetchGetSingle } from "../../Services/fetchUtil";
 
 const styles = theme => ({
     container: {
@@ -39,14 +39,11 @@ class FormEdit extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            id: '',
-            name: '',
-            author: '',
-            genre: '',
-            redirect: false
+            redirect: false,
+            json: {},
+            fetched: false
         }
 
-        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -54,18 +51,11 @@ class FormEdit extends Component{
     componentDidMount() {
         const {id} = this.props.match.params;
 
-        fetch(`http://localhost:8080/api/books/${id}`).then(response=>
-            response.json()).then(json=>{
-                this.setState({id: json.id})
-                this.setState({name: json.name})
-                this.setState({author: json.author.name})
-                this.setState({genre: json.genre.name})
-        });
+        fetchGetSingle(id).then(response=>
+            response.json()).then(json => this.setState({json}, this.changeFetched));
     }
 
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
-    };
+    changeFetched = () => (this.setState({fetched: true}))
 
     handleSubmit(e){
 
@@ -75,66 +65,57 @@ class FormEdit extends Component{
         for (const [key, value]  of formData.entries()) {
             jsonObject[key] = value;
         }
-
-        fetch('http://localhost:8080/api/books', {
-            method: 'PUT',
-            body: JSON.stringify(jsonObject),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
         e.preventDefault();
-        setTimeout(()=>(this.setState({redirect: true})), 1000)
+
+        fetchPut(jsonObject).then(() => {
+            setTimeout(()=>(this.setState({redirect: true})), 1000)
+        });
 
     }
 
     render() {
 
         const { classes } = this.props;
+        const { json, redirect, fetched } = this.state;
 
         return(
             <div className={classes.root}>
+                {fetched &&
                 <Paper className={classes.paper}>
                     <Grid container wrap="nowrap" spacing={16}>
                         <Grid item>
-                <form className={classes.container} onSubmit={this.handleSubmit}>
-                    <input type="text" name="id" defaultValue={this.state.id} hidden/>
-                    <TextField
-                        id="name"
-                        className={classes.textField}
-                        name="name"
-                        label="Name"
-                        value={this.state.name}
-                        onChange={this.handleChange('name')}
-                        margin="normal"
-                    />
-                    <TextField
-                        id="author"
-                        className={classes.textField}
-                        name="author"
-                        label="Author"
-                        value={this.state.author}
-                        onChange={this.handleChange('author')}
-                        margin="normal"
-                    />
-                    <TextField
-                        id="genre"
-                        className={classes.textField}
-                        name="genre"
-                        label="Genre"
-                        value={this.state.genre}
-                        onChange={this.handleChange('genre')}
-                        margin="normal"
-                    />
-                    <Button className={classes.textField} type="submit" variant="contained" color="primary">Update</Button>
-                </form>
+                            <form className={classes.container} onSubmit={this.handleSubmit}>
+                                <input type="text" name="id" defaultValue={json.id} hidden/>
+                                <TextField
+                                    id="name"
+                                    className={classes.textField}
+                                    name="name"
+                                    label="Name"
+                                    defaultValue={json.name}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    id="author"
+                                    className={classes.textField}
+                                    name="author"
+                                    label="Author"
+                                    defaultValue={json.author.name}
+                                    margin="normal"
+                                />
+                                <TextField
+                                    id="genre"
+                                    className={classes.textField}
+                                    name="genre"
+                                    label="Genre"
+                                    defaultValue={json.genre.name}
+                                    margin="normal"
+                                />
+                                <Button className={classes.textField} type="submit" variant="contained" color="primary">Update</Button>
+                            </form>
                         </Grid>
                     </Grid>
-                </Paper>
-                {this.state.redirect &&
-                (<Redirect to = '/'/>)
-                }
+                </Paper>}
+                {redirect && (<Redirect to = '/'/>)}
             </div>
         )
     }

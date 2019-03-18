@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,6 +6,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import {fetchPost} from "../../Services/fetchUtil";
 
 const styles = theme => ({
     container: {
@@ -65,17 +65,12 @@ class FormAdd extends Component{
         for (const [key, value]  of formData.entries()) {
             jsonObject[key] = value;
         }
-
-        fetch('http://localhost:8080/api/books', {
-            method: 'POST',
-            body: JSON.stringify(jsonObject),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
         e.preventDefault();
-        setTimeout(()=>(this.setState({redirect: true})), 1000)
+
+        fetchPost(jsonObject).then(()=>{
+            setTimeout(()=>(this.setState({redirect: true})), 1000)
+        });
+
 
     }
 
@@ -118,9 +113,7 @@ class FormAdd extends Component{
                         </Grid>
                     </Grid>
                 </Paper>
-                {this.state.redirect &&
-                (<Redirect to = '/'/>)
-                }
+                {this.state.redirect && (<Redirect to = '/'/>)}
             </div>
         )
     }

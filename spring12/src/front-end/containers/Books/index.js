@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 import BooksList from '../../components/BooksList'
 import Login from '../Login'
 import Cookies from 'universal-cookie';
 import Button from '@material-ui/core/Button';
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
+import {fetchDelete, fetchGet} from "../../Services/fetchUtil"
 
 const cookies = new Cookies();
 
@@ -31,32 +31,29 @@ class Books extends Component{
     }
 
     handleClick = value => event => {
-        fetch(`http://localhost:8080/api/books/${value}`, {
-            method: 'DELETE',
-        }).then(response => {
+        fetchDelete(value).then(response => {
             if(response.status == 403){
                 this.setState({message: 'Denied. Log in as ADMIN'})
             }
-        })
-        setTimeout(()=>this.fetchData(), 1000);
+        }).then(()=> setTimeout(()=>this.fetchData(), 1000));
     };
 
     fetchData = () =>{
-            if(cookies.get('auth') == 1){
-                this.setState({authenticated: true})
+        if(cookies.get('auth') == 1){
+            this.setState({authenticated: true})
+        }else{
+            this.setState({authenticated: false})
+        }
+        fetchGet().then(response => {
+            if(response.ok){
+                return response.json()
             }else{
+                cookies.remove('auth')
                 this.setState({authenticated: false})
+                throw new Error('Something went wrong');
             }
-            fetch("http://localhost:8080/api/books").then(response => {
-                if(response.ok){
-                    return response.json()
-                }else{
-                    cookies.remove('auth')
-                    this.setState({authenticated: false})
-                    throw new Error('Something went wrong');
-                }
-            }).then(json => this.setState({books: json})
-            ).catch(e => console.log(e));
+        }).then(json => this.setState({books: json})
+        ).catch(e => console.log(e));
     }
 
     logourHandler = () => {
@@ -71,13 +68,14 @@ class Books extends Component{
 
     render() {
         const { classes } = this.props;
+        const { message, authenticated, books } = this.state;
 
         return (
             <div className={classes.logout}>
-                {this.state.message && (<h3>{this.state.message}</h3>)}
-                {this.state.authenticated && (<BooksList list = {this.state.books} onClick = {this.handleClick}/>)}
+                {message && (<h3>{message}</h3>)}
+                {authenticated && (<BooksList list = {books} onClick = {this.handleClick}/>)}
                 <Login/>
-                {this.state.authenticated && (<Button variant="contained" color="primary" onClick = {this.logourHandler}>Logout</Button>)}
+                {authenticated && (<Button variant="contained" color="primary" onClick = {this.logourHandler}>Logout</Button>)}
             </div>
 
         );
