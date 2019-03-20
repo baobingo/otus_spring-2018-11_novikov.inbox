@@ -12,7 +12,7 @@ import Paper from '@material-ui/core/Paper';
 import CommentIcon from '@material-ui/icons/Comment';
 import {Link} from "react-router-dom";
 import Button from '@material-ui/core/Button';
-import {fetchGetReviews} from "../../Services/fetchUtil";
+import {fetchGetReviews} from "../../Services/fetchBook";
 
 
 const styles = theme => ({

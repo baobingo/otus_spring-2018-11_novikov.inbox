@@ -7,7 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Cookies from 'universal-cookie';
-import {loginPost} from "../../Services/loginUtil";
+import {loginPost} from "../../Services/fetchLogin";
 
 const styles = theme => ({
     container: {

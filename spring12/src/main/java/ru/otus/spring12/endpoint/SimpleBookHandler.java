@@ -36,26 +36,26 @@ public class SimpleBookHandler {
     }
 
     Mono<ServerResponse> updateBook(ServerRequest request) {
-        return request.bodyToMono(Book.class).doOnNext(requestBook -> repository.findById((long)requestBook.getId()).doOnNext(book ->
-        {
-            book.setName(requestBook.getName());
-            book.getAuthor().setName(requestBook.getAuthor().getName());
-            book.getGenre().setName(requestBook.getGenre().getName());
-            repository.save(book).subscribe();
-        }).subscribe()).then(ok().build());
+        return request.bodyToMono(Book.class)
+                .flatMap(book -> repository.findById((long)book.getId())
+                        .flatMap(book1 -> {
+                            book1.setName(book.getName());
+                            book1.getAuthor().setName(book.getAuthor().getName());
+                            book1.getGenre().setName(book.getGenre().getName());
+                            return repository.save(book1);
+                        })
+                ).then(ok().build());
     }
 
     Mono<ServerResponse> insertBook(ServerRequest request){
-        return request.bodyToMono(Book.class).doOnNext(book ->
-        {
+        return request.bodyToMono(Book.class).flatMap(book -> {
             book.setId(sequenceService.getNextSequence());
-            repository.insert(book).subscribe();
-        }).then(ok().build());
+            return repository.insert(book).then(ok().build());
+        });
     }
 
     Mono<ServerResponse> deleteBook(ServerRequest request){
-        return repository.findById(Long.parseLong(request.pathVariable("id")))
-                .doOnNext(book -> repository.delete(book).subscribe()).then(ok().build());
+        return repository.deleteById(Long.parseLong(request.pathVariable("id"))).then(ok().build());
     }
 
 }

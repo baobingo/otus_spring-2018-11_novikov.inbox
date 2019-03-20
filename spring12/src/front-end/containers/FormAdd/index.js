@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import {fetchPost} from "../../Services/fetchUtil";
+import {fetchPost} from "../../Services/fetchBook";
 
 const styles = theme => ({
     container: {
@@ -67,10 +67,7 @@ class FormAdd extends Component{
         }
         e.preventDefault();
 
-        fetchPost(jsonObject).then(()=>{
-            setTimeout(()=>(this.setState({redirect: true})), 1000)
-        });
-
+        fetchPost(jsonObject).then(()=> this.setState({redirect: true}));
 
     }
 

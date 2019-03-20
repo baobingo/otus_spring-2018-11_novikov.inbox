@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import Button from '@material-ui/core/Button';
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
-import {fetchDelete, fetchGet} from "../../Services/fetchUtil"
+import {fetchDelete, fetchGet} from "../../Services/fetchBook"
 
 const cookies = new Cookies();
 
@@ -35,7 +35,7 @@ class Books extends Component{
             if(response.status == 403){
                 this.setState({message: 'Denied. Log in as ADMIN'})
             }
-        }).then(()=> setTimeout(()=>this.fetchData(), 1000));
+        }).then(this.fetchData());
     };
 
     fetchData = () =>{

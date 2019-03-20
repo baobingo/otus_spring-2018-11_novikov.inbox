@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { fetchPut, fetchGetSingle } from "../../Services/fetchUtil";
+import { fetchPut, fetchGetSingle } from "../../Services/fetchBook";
 
 const styles = theme => ({
     container: {
@@ -67,9 +67,7 @@ class FormEdit extends Component{
         }
         e.preventDefault();
 
-        fetchPut(jsonObject).then(() => {
-            setTimeout(()=>(this.setState({redirect: true})), 1000)
-        });
+        fetchPut(jsonObject).then(() => this.setState({redirect: true}));
 
     }
 
