@@ -1,5 +1,7 @@
 package ru.otus.spring13;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -17,7 +19,9 @@ import ru.otus.spring13.repository.BookRepositoryReactive;
 
 @SpringBootApplication
 public class Main {
-    
+
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         /*
             Получаем контекст
@@ -49,14 +53,11 @@ public class Main {
                     MutableAcl mutableAcl;
                     try {
                         mutableAcl = aclService.createAcl(objectIdentity);
+                        mutableAcl.insertAce( 0, BasePermission.ADMINISTRATION, mutableAcl.getOwner(), true);
+                        aclService.updateAcl(mutableAcl);
                     }catch (AlreadyExistsException e){
-                        aclService.deleteAcl(objectIdentity, true);
-                        mutableAcl = aclService.createAcl(objectIdentity);
+                        logger.warn("ACL exist.");
                     }
-
-                    mutableAcl.insertAce( 0, BasePermission.ADMINISTRATION, mutableAcl.getOwner(), true);
-
-                    aclService.updateAcl(mutableAcl);
                 });
     }
 }
