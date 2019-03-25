@@ -5,6 +5,9 @@ spring:
       host: localhost
       customseq: customSequences
       port: 27017
+  batch:
+    job:
+      enabled: false
 management:
   endpoint:
     shutdown:
@@ -12,4 +15,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["restart"]
+        include: ["migrate"]
