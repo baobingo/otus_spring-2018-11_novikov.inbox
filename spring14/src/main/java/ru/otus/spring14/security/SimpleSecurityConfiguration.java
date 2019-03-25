@@ -35,6 +35,7 @@ public class SimpleSecurityConfiguration{
                 .authorizeExchange()
                 .pathMatchers("/*")
                 .permitAll()
+                .pathMatchers("/actuator/**").permitAll()
                 .pathMatchers(HttpMethod.GET, "/api/books/**/*").hasRole("USER")
                 .pathMatchers(HttpMethod.PUT, "/api/books").hasRole("USER")
                 .pathMatchers(HttpMethod.POST, "/api/books").hasRole("USER")
