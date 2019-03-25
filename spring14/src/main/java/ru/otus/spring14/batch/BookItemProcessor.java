@@ -13,7 +13,10 @@ import java.util.stream.Collectors;
 public class BookItemProcessor implements ItemProcessor<Book, BookSQL> {
     @Override
     public BookSQL process(Book book) throws Exception {
-        BookSQL bookSQL = new BookSQL(book.getName(), new AuthorSQL(book.getAuthor().getName()), new GenreSQL(book.getGenre().getName()));
+        BookSQL bookSQL = new BookSQL();
+        bookSQL.setName(book.getName());
+        bookSQL.setAuthor(new AuthorSQL(book.getAuthor().getName()));
+        bookSQL.setGenre(new GenreSQL(book.getGenre().getName()));
         List<ReviewSQL> reviewSQLS = book.getReviews().stream().map(review -> {
             return new ReviewSQL(review.getAuthor(), review.getBody());
         }).collect(Collectors.toList());

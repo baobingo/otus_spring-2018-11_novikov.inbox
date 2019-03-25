@@ -16,9 +16,15 @@ public class BookSQL {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ReviewSQL> reviews;
 
-    public BookSQL(String name, AuthorSQL author, GenreSQL genre) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setAuthor(AuthorSQL author) {
         this.author = author;
+    }
+
+    public void setGenre(GenreSQL genre) {
         this.genre = genre;
     }
 
