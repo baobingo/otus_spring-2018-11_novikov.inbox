@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: traffic_judge
+      host: localhost
+      port: 27017
