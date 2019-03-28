@@ -72,7 +72,6 @@ public class TrafficJudgeConfiguration {
     @Bean
     public IntegrationFlow judgmentFlow(MongoTemplate mongoTemplate) {
         return IntegrationFlows.from(mongoMessageSource(mongoTemplate), c -> c.poller(Pollers.fixedDelay(1, TimeUnit.SECONDS)))
-                .transform(Vehicle.class, vehicle -> { vehicle.setChecked(); return vehicle; })
                 .handle("trafficJudgeService", "updateChecked")
                 .filter(Vehicle.class, vehicle -> vehicle.getSpeed()>vehicle.getSpeedLimit())
                 .<Vehicle, Penalty>transform(vehicle ->
@@ -98,6 +97,7 @@ public class TrafficJudgeConfiguration {
         MongoDbMessageSource messageSource = new MongoDbMessageSource(mongoTemplate.getMongoDbFactory(), new LiteralExpression("{'checked' : false}"));
         messageSource.setExpectSingleResult(true);
         messageSource.setEntityClass(Vehicle.class);
+
         messageSource.setCollectionNameExpression(new LiteralExpression("vehicle"));
 
         return messageSource;
@@ -134,7 +134,6 @@ public class TrafficJudgeConfiguration {
     @Bean
     public IntegrationFlow paidFlow(MongoTemplate mongoTemplate) {
         return IntegrationFlows.from(mongoMessageSourcePenalty(mongoTemplate), c -> c.poller(Pollers.fixedDelay(1, TimeUnit.SECONDS).maxMessagesPerPoll(5)))
-                .transform(Penalty.class, penalty -> { penalty.setPaid(); return penalty; })
                 .handle("trafficJudgeService", "logPaid")
                 .handle(mongoOutboundAdapterPenalty(mongoTemplate))
                 .get();

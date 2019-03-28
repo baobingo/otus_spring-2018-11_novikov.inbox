@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.otus.spring15.domain.Penalty;
 import ru.otus.spring15.domain.Vehicle;
+import ru.otus.spring15.repository.PenaltyRepository;
 import ru.otus.spring15.repository.VehicleRepository;
 
 @Service
@@ -23,6 +24,7 @@ public class TrafficJudgeService {
     }
 
     public Vehicle updateChecked(Vehicle vehicle){
+        vehicle.setChecked();
         return vehicleRepository.save(vehicle);
     }
 
@@ -32,7 +34,8 @@ public class TrafficJudgeService {
     }
 
     public Penalty logPaid(Penalty penalty){
-        logger.info("Penalty was PAID, car: {} penalty cost: {}", penalty.getVehicle().getId(), penalty.getCost());
+        logger.info("Penalty was SENT to OWNER, car: {} penalty cost: {}", penalty.getVehicle().getId(), penalty.getCost());
+        penalty.setPaid();
         return penalty;
     }
 }
