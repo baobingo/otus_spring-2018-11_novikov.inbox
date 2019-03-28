@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
 import ru.otus.spring15.domain.Penalty;
 import ru.otus.spring15.domain.Vehicle;
@@ -30,7 +29,6 @@ public class Main {
 
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Main.class, args);
 		QueueChannel queueChannel = configurableApplicationContext.getBean("aimChannel", QueueChannel.class);
-		QueueChannel resultChannel = configurableApplicationContext.getBean("resultChannel", QueueChannel.class);
 
 		MongoRepository<Vehicle, String> vehicleRepository = configurableApplicationContext.getBean(VehicleRepository.class);
 		MongoRepository<Penalty, String> penaltyRepository = configurableApplicationContext.getBean(PenaltyRepository.class);

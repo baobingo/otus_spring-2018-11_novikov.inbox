@@ -141,7 +141,7 @@ public class TrafficJudgeConfiguration {
     }
 
     /*
-    * создаем флоу оплаты, читаем-трансформирует-записываем
+    * создаем флоу оплаты, читаем-выбрасываем в канал
     * */
     @Bean
     public IntegrationFlow paidFlow(MongoTemplate mongoTemplate) {
@@ -151,10 +151,14 @@ public class TrafficJudgeConfiguration {
                 .get();
     }
 
+
+    /*
+    * Получаем из канала, выбрасываем в эндпоинт, в наш гетвей.
+    * */
     @Bean
     public IntegrationFlow endFlow() {
         return IntegrationFlows.from("postboxChannel")
-                .<Penalty, Optional<Penalty>>transform(penalty -> Optional.of(penalty))
+                .<Penalty, Optional<Penalty>>transform(Optional::of)
                 .channel("resultChannel")
                 .get();
     }
