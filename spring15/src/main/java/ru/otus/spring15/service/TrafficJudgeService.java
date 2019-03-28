@@ -40,8 +40,4 @@ public class TrafficJudgeService {
         penalty.setPaid();
         return penaltyRepository.save(penalty);
     }
-
-    public void logMail(Penalty penalty){
-        logger.info("NEW MAIL, car: {} penalty cost: {}", penalty.getVehicle().getId(), penalty.getCost());
-    }
 }

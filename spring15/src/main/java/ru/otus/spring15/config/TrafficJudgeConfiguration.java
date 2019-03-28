@@ -20,6 +20,7 @@ import ru.otus.spring15.domain.Penalty;
 import ru.otus.spring15.domain.Vehicle;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
@@ -31,8 +32,13 @@ public class TrafficJudgeConfiguration {
     /*
     * Канал в который пушим проезжающие машины
     * */
-    @Bean
+    @Bean(name = "aimChannel")
     public QueueChannel aimChannel() {
+        return MessageChannels.queue(100).get();
+    }
+
+    @Bean
+    public QueueChannel resultChannel() {
         return MessageChannels.queue(100).get();
     }
 
@@ -148,7 +154,8 @@ public class TrafficJudgeConfiguration {
     @Bean
     public IntegrationFlow endFlow() {
         return IntegrationFlows.from("postboxChannel")
-                .handle("trafficJudgeService", "logMail")
+                .<Penalty, Optional<Penalty>>transform(penalty -> Optional.of(penalty))
+                .channel("resultChannel")
                 .get();
     }
 }

@@ -29,7 +29,8 @@ public class Main {
 		ExecutorService executor = Executors.newFixedThreadPool(2);
 
 		ConfigurableApplicationContext configurableApplicationContext = SpringApplication.run(Main.class, args);
-		QueueChannel queueChannel = configurableApplicationContext.getBean(QueueChannel.class);
+		QueueChannel queueChannel = configurableApplicationContext.getBean("aimChannel", QueueChannel.class);
+		QueueChannel resultChannel = configurableApplicationContext.getBean("resultChannel", QueueChannel.class);
 
 		MongoRepository<Vehicle, String> vehicleRepository = configurableApplicationContext.getBean(VehicleRepository.class);
 		MongoRepository<Penalty, String> penaltyRepository = configurableApplicationContext.getBean(PenaltyRepository.class);
@@ -56,5 +57,9 @@ public class Main {
 
 		executor.execute(runnableTask);
 		executor.execute(runnableTask);
+
+		while (true){
+			radar.result().ifPresent(x->logger.info("NEW MAIL, car: {} penalty cost: {}", x.getVehicle().getId(), x.getCost()));
+		}
 	}
 }
