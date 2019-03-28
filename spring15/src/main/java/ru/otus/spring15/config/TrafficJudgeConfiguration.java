@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.expression.common.LiteralExpression;
 import org.springframework.integration.annotation.*;
+import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.core.MessageSource;
@@ -33,6 +34,11 @@ public class TrafficJudgeConfiguration {
     @Bean
     public QueueChannel aimChannel() {
         return MessageChannels.queue(100).get();
+    }
+
+    @Bean
+    public PublishSubscribeChannel postboxChannel() {
+        return MessageChannels.publishSubscribe().get();
     }
 
     /*
@@ -135,7 +141,14 @@ public class TrafficJudgeConfiguration {
     public IntegrationFlow paidFlow(MongoTemplate mongoTemplate) {
         return IntegrationFlows.from(mongoMessageSourcePenalty(mongoTemplate), c -> c.poller(Pollers.fixedDelay(1, TimeUnit.SECONDS).maxMessagesPerPoll(5)))
                 .handle("trafficJudgeService", "logPaid")
-                .handle(mongoOutboundAdapterPenalty(mongoTemplate))
+                .channel("postboxChannel")
+                .get();
+    }
+
+    @Bean
+    public IntegrationFlow endFlow() {
+        return IntegrationFlows.from("postboxChannel")
+                .handle("trafficJudgeService", "logMail")
                 .get();
     }
 }

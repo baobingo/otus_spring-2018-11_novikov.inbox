@@ -13,9 +13,11 @@ public class TrafficJudgeService {
 
     private static Logger logger = LoggerFactory.getLogger(TrafficJudgeService.class);
     private VehicleRepository vehicleRepository;
+    private PenaltyRepository penaltyRepository;
 
-    public TrafficJudgeService(VehicleRepository vehicleRepository) {
+    public TrafficJudgeService(VehicleRepository vehicleRepository, PenaltyRepository penaltyRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.penaltyRepository = penaltyRepository;
     }
 
     public Vehicle logVehicle(Vehicle vehicle){
@@ -36,6 +38,10 @@ public class TrafficJudgeService {
     public Penalty logPaid(Penalty penalty){
         logger.info("Penalty was SENT to OWNER, car: {} penalty cost: {}", penalty.getVehicle().getId(), penalty.getCost());
         penalty.setPaid();
-        return penalty;
+        return penaltyRepository.save(penalty);
+    }
+
+    public void logMail(Penalty penalty){
+        logger.info("NEW MAIL, car: {} penalty cost: {}", penalty.getVehicle().getId(), penalty.getCost());
     }
 }

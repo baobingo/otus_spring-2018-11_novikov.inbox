@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
 import ru.otus.spring15.domain.Penalty;
 import ru.otus.spring15.domain.Vehicle;
@@ -32,6 +33,7 @@ public class Main {
 
 		MongoRepository<Vehicle, String> vehicleRepository = configurableApplicationContext.getBean(VehicleRepository.class);
 		MongoRepository<Penalty, String> penaltyRepository = configurableApplicationContext.getBean(PenaltyRepository.class);
+
 		vehicleRepository.deleteAll();
 		penaltyRepository.deleteAll();
 
@@ -43,7 +45,7 @@ public class Main {
 			while (true) {
 				radar.aim(new Vehicle(new Random().ints(50, 100).findFirst().getAsInt(),
 						(new Random().ints(60, 90).findFirst().getAsInt() / 10) * 10));
-				logger.info("Catch new Vehicle, QUEUE Remaining capacity: {}", queueChannel.getRemainingCapacity());
+				logger.info("Catch new Vehicle, QUEUE Remaining capacity: {}\n", queueChannel.getRemainingCapacity());
 				try {
 					Thread.sleep(new Random().longs(0, 500).findFirst().getAsLong());
 				} catch (InterruptedException e) {
