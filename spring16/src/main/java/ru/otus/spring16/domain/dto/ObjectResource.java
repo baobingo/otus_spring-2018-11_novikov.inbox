@@ -17,7 +17,7 @@ public class ObjectResource extends ResourceSupport {
         return object;
     }
 
-    public void setObject(Book object) {
+    public void setObject(Object object) {
         this.object = object;
     }
 }
