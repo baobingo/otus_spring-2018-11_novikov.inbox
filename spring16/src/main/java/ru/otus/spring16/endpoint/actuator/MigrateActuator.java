@@ -1,4 +1,4 @@
-package ru.otus.spring16.endpoint;
+package ru.otus.spring16.endpoint.actuator;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Endpoint(id = "migrate")
-public class SimpleActuatorMigrate {
+public class MigrateActuator {
 
     private JobLauncher jobLauncher;
     private Job importUserJob;
 
-    public SimpleActuatorMigrate(JobLauncher jobLauncher, Job importUserJob) {
+    public MigrateActuator(JobLauncher jobLauncher, Job importUserJob) {
         this.jobLauncher = jobLauncher;
         this.importUserJob = importUserJob;
     }

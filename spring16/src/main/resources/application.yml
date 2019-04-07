@@ -15,7 +15,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: ["migrate", "health", "logfile"]
+        include: ["migrate", "health", "logfile", "dashboard"]
 logging:
   path: /
   file: log.txt
