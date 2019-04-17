@@ -1,0 +1,21 @@
+spring:
+  data:
+    mongodb:
+      database: 777_books
+      host: localhost
+      customseq: customSequences
+      port: 27017
+  batch:
+    job:
+      enabled: false
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: ["migrate", "health", "logfile", "dashboard"]
+logging:
+  path: /
+  file: log.txt

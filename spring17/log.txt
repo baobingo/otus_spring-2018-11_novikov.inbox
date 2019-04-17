@@ -1,0 +1,75 @@
+2019-04-08 08:54:05.703  INFO 438504 --- [restartedMain] ru.otus.spring17.Main                    : Starting Main on DESKTOP-NSOTLM2 with PID 438504 (C:\Users\anovikov\IdeaProjects\spring-2018-11_novikov.inbox\spring16\target\classes started by anovikov in C:\Users\anovikov\IdeaProjects\spring-2018-11_novikov.inbox\spring16)
+2019-04-08 08:54:05.711  INFO 438504 --- [restartedMain] ru.otus.spring17.Main                    : No active profile set, falling back to default profiles: default
+2019-04-08 08:54:06.231  INFO 438504 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-04-08 08:54:06.233  INFO 438504 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-04-08 08:54:12.760  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-08 08:54:12.761  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-04-08 08:54:12.806  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39ms. Found 0 repository interfaces.
+2019-04-08 08:54:12.806  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-08 08:54:12.806  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-04-08 08:54:12.832  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25ms. Found 1 repository interfaces.
+2019-04-08 08:54:13.642  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-08 08:54:13.643  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-04-08 08:54:13.710  INFO 438504 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface ru.otus.spring17.repository.BookRepositoryReactive.
+2019-04-08 08:54:13.712  INFO 438504 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface ru.otus.spring17.repository.security.UserRepositoryReactive.
+2019-04-08 08:54:13.737  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 92ms. Found 1 repository interfaces.
+2019-04-08 08:54:13.743  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-04-08 08:54:13.743  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-04-08 08:54:13.786  INFO 438504 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Reactive MongoDB - Could not safely identify store assignment for repository candidate interface ru.otus.spring17.batch.repository.SimpleCrudRepository.
+2019-04-08 08:54:13.810  INFO 438504 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 66ms. Found 2 repository interfaces.
+2019-04-08 08:54:14.193  INFO 438504 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$b7d2ffe0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-08 08:54:14.211  INFO 438504 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.ReactiveMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.ReactiveMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$bbbb6fb6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-08 08:54:14.223  INFO 438504 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'methodMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-08 08:54:14.973  INFO 438504 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-04-08 08:54:15.075  INFO 438504 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-04-08 08:54:15.165  INFO 438504 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-04-08 08:54:15.249  INFO 438504 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2019-04-08 08:54:15.251  INFO 438504 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-04-08 08:54:15.425  INFO 438504 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-04-08 08:54:15.627  INFO 438504 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2019-04-08 08:54:16.326  INFO 438504 --- [restartedMain] o.h.t.schema.internal.SchemaCreatorImpl  : HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@781b2f8d'
+2019-04-08 08:54:16.329  INFO 438504 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-04-08 08:54:16.389  INFO 438504 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-04-08 08:54:25.061  INFO 438504 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-04-08 08:54:25.118  INFO 438504 --- [cluster-ClusterId{value='5caae2119d16a0b0e834bcda', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:197}] to localhost:27017
+2019-04-08 08:54:25.123  INFO 438504 --- [cluster-ClusterId{value='5caae2119d16a0b0e834bcda', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=2696300}
+2019-04-08 08:54:25.389  INFO 438504 --- [restartedMain] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2019-04-08 08:54:25.603  INFO 438504 --- [restartedMain] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:3, serverValue:198}] to localhost:27017
+2019-04-08 08:54:25.654  INFO 438504 --- [restartedMain] org.mongodb.driver.cluster               : No server chosen by com.mongodb.async.client.ClientSessionHelper$1@2f272f99 from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, serverDescriptions=[ServerDescription{address=localhost:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+2019-04-08 08:54:25.655  INFO 438504 --- [restartedMain] org.mongodb.driver.cluster               : No server chosen by com.mongodb.async.client.ClientSessionHelper$1@3eb9e700 from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, serverDescriptions=[ServerDescription{address=localhost:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+2019-04-08 08:54:25.885  INFO 438504 --- [restartedMain] com.github.mongobee.Mongobee             : Mongobee acquired process lock, starting the data migration sequence..
+2019-04-08 08:54:25.955  INFO 438504 --- [restartedMain] org.reflections.Reflections              : Reflections took 43 ms to scan 1 urls, producing 1 keys and 2 values 
+2019-04-08 08:54:25.982  INFO 438504 --- [restartedMain] com.github.mongobee.Mongobee             : [ChangeSet: id=startupFill, author=baobingo, changeLogClass=ru.otus.spring17.bee.changelog.Data, changeSetMethod=startupFill] passed over
+2019-04-08 08:54:25.983  INFO 438504 --- [restartedMain] com.github.mongobee.Mongobee             : [ChangeSet: id=userFillout, author=baobingo, changeLogClass=ru.otus.spring17.bee.changelog.Security, changeSetMethod=userFillout] passed over
+2019-04-08 08:54:25.984  INFO 438504 --- [restartedMain] com.github.mongobee.Mongobee             : Mongobee is releasing process lock.
+2019-04-08 08:54:25.989  INFO 438504 --- [restartedMain] com.github.mongobee.Mongobee             : Mongobee has finished his job.
+2019-04-08 08:54:26.163  INFO 438504 --- [cluster-ClusterId{value='5caae2119d16a0b0e834bcdb', description='null'}-localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:2, serverValue:199}] to localhost:27017
+2019-04-08 08:54:26.165  INFO 438504 --- [cluster-ClusterId{value='5caae2119d16a0b0e834bcdb', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 0, 5]}, minWireVersion=0, maxWireVersion=7, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=1673200}
+2019-04-08 08:54:26.194  INFO 438504 --- [nioEventLoopGroup-2-3] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:5, serverValue:201}] to localhost:27017
+2019-04-08 08:54:26.194  INFO 438504 --- [nioEventLoopGroup-2-2] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:4, serverValue:200}] to localhost:27017
+2019-04-08 08:54:26.684  INFO 438504 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 4 endpoint(s) beneath base path '/actuator'
+2019-04-08 08:54:26.889  WARN 438504 --- [restartedMain] o.s.b.a.batch.JpaBatchConfigurer         : JPA does not support custom isolation levels, so locks may not be taken when launching Jobs
+2019-04-08 08:54:26.892  INFO 438504 --- [restartedMain] o.s.b.c.r.s.JobRepositoryFactoryBean     : No database type set, using meta data indicating: H2
+2019-04-08 08:54:26.905  INFO 438504 --- [restartedMain] o.s.b.c.l.support.SimpleJobLauncher      : No TaskExecutor has been set, defaulting to synchronous executor.
+2019-04-08 08:54:27.215  INFO 438504 --- [restartedMain] o.s.b.web.embedded.netty.NettyWebServer  : Netty started on port(s): 8080
+2019-04-08 08:54:27.219  INFO 438504 --- [restartedMain] ru.otus.spring17.Main                    : Started Main in 22.912 seconds (JVM running for 26.638)
+2019-04-08 08:54:28.017  INFO 438504 --- [restartedMain] reactor.Flux.OnAssembly.1                : | onSubscribe([Fuseable] FluxOnAssembly.OnAssemblySubscriber)
+2019-04-08 08:54:28.031  INFO 438504 --- [restartedMain] reactor.Flux.OnAssembly.1                : | request(unbounded)
+2019-04-08 08:54:28.136  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onNext([ID] 34 [TITLE] Book #3 [AUTHOR] Author #3 [GENRE] Genre #3
+)
+2019-04-08 08:54:28.387  WARN 438504 --- [nioEventLoopGroup-2-2] ru.otus.spring17.Main                    : ACL exist.
+2019-04-08 08:54:28.390  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onNext([ID] 78 [TITLE] Book #7 [AUTHOR] Author #7 [GENRE] Genre #7
+)
+2019-04-08 08:54:28.397  WARN 438504 --- [nioEventLoopGroup-2-2] ru.otus.spring17.Main                    : ACL exist.
+2019-04-08 08:54:28.400  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onNext([ID] 89 [TITLE] Book #8 [AUTHOR] Author #8 [GENRE] Genre #8
+)
+2019-04-08 08:54:28.403  WARN 438504 --- [nioEventLoopGroup-2-2] ru.otus.spring17.Main                    : ACL exist.
+2019-04-08 08:54:28.404  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onNext([ID] 100 [TITLE] Book #9 [AUTHOR] Author #9 [GENRE] Genre #9
+)
+2019-04-08 08:54:28.407  WARN 438504 --- [nioEventLoopGroup-2-2] ru.otus.spring17.Main                    : ACL exist.
+2019-04-08 08:54:28.411  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onNext([ID] 111 [TITLE] fsdf [AUTHOR] fsdf [GENRE] fsdf
+)
+2019-04-08 08:54:28.415  WARN 438504 --- [nioEventLoopGroup-2-2] ru.otus.spring17.Main                    : ACL exist.
+2019-04-08 08:54:28.415  INFO 438504 --- [nioEventLoopGroup-2-2] reactor.Flux.OnAssembly.1                : | onComplete()
