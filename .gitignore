@@ -2,7 +2,9 @@
 **.iml
 **/target
 **/node_modules
-**/*.exe
+**/**.exe
+**/**.txt
+**/**.gz
 
 # Mac
 .DS_Store
