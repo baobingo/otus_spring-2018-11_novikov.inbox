@@ -7,6 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
@@ -18,7 +20,7 @@ import reactor.core.publisher.Mono;
 
 @EnableWebFluxSecurity
 @ComponentScan
-public class SimpleSecurityConfiguration{
+public class SimpleSecurityConfiguration {
 
     @Autowired
     ReactiveUserDetailsService reactiveUserDetailsService;

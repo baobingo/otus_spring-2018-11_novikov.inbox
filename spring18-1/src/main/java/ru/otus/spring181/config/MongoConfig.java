@@ -11,24 +11,20 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories(basePackages = "ru.otus.spring181.repository")
 public class MongoConfig extends AbstractMongoConfiguration {
 
-    private String dbName;
-    private String dbHost;
-    private String dbPort;
+    private ConfigProperties configProperties;
 
-    public MongoConfig(@Value("${spring.data.mongodb.database}") String dbName, @Value("${spring.data.mongodb.host}") String dbHost, @Value("${spring.data.mongodb.port}") String dbPort) {
-        this.dbName = dbName;
-        this.dbHost = dbHost;
-        this.dbPort = dbPort;
+    public MongoConfig(ConfigProperties configProperties) {
+        this.configProperties = configProperties;
     }
 
     @Override
     @Bean
     public MongoClient mongoClient() {
-        return new MongoClient(dbHost, Integer.parseInt(dbPort));
+        return new MongoClient(configProperties.getHost(), configProperties.getPort());
     }
 
     @Override
     protected String getDatabaseName() {
-        return dbName;
+        return configProperties.getDatabase();
     }
 }

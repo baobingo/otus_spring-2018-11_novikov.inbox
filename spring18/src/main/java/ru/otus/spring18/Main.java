@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+//import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.ObjectIdentityImpl;
 import org.springframework.security.acls.model.*;
@@ -16,10 +19,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import reactor.core.publisher.Mono;
+import ru.otus.spring18.config.ConfigProperties;
 import ru.otus.spring18.repository.BookRepositoryReactive;
 
 @SpringBootApplication
 @EnableHystrix
+//@EnableHystrixDashboard
 public class Main {
 
     private static Logger logger = LoggerFactory.getLogger(Main.class);
